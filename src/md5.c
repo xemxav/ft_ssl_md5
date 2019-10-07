@@ -1,47 +1,20 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_ssl.h                                         .::    .:/ .      .::   */
+/*   md5.c                                            .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: xmoreau <xmoreau@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/10/07 10:34:38 by xmoreau      #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/07 10:34:38 by xmoreau     ###    #+. /#+    ###.fr     */
+/*   Created: 2019/10/07 17:30:03 by xmoreau      #+#   ##    ##    #+#       */
+/*   Updated: 2019/10/07 17:30:03 by xmoreau     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef SSL_H
-# define SSL_H
+#include "../includes/ft_ssl.h"
 
-# include "../libft/libft.h"
-
-typedef struct		s_control
+void			md5(t_control *control)
 {
-	void			(*cmd)(struct t_control *);
-//	char			*cmd;
-	char			*message;
-	char			*filename;
-	char 			r;
-	char 			q;
-	char 			p;
-	int 			fd;
-}					t_control;
-
-
-/*
-**		ft_ssl.c
-*/
-/*
-**		freeing.c
-*/
-/*
-**		md5.c
-*/
-void				md5(t_control *control);
-/*
-**		sha256.c
-*/
-void				sha256(t_control *control);
-
-#endif
+	ft_printf("je fais md5 sur ");
+	return (1);
+}

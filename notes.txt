@@ -1,0 +1,5 @@
+pour quitter openssl -> exit ou quit
+
+./ft_ssl sha256/md5 flag argument
+
+Trouver comment verifier si stdin est "plein", dans ce cas la bas besoin d'avoir -s
