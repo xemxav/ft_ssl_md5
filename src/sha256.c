@@ -13,8 +13,9 @@
 
 #include "../includes/ft_ssl.h"
 
-void			sha256(t_control *control)
+int			sha256(t_control *control)
 {
+	(void)control;
 	ft_printf("je fais sha256 sur s");
 	return (1);
 }

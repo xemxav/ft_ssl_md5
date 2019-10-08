@@ -18,7 +18,7 @@
 
 typedef struct		s_control
 {
-	void			(*cmd)(struct t_control *);
+	int				(*cmd)(struct s_control *);
 //	char			*cmd;
 	char			*message;
 	char			*filename;
@@ -38,10 +38,10 @@ typedef struct		s_control
 /*
 **		md5.c
 */
-void				md5(t_control *control);
+int				md5(t_control *control);
 /*
 **		sha256.c
 */
-void				sha256(t_control *control);
+int				sha256(t_control *control);
 
 #endif

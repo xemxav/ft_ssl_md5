@@ -13,8 +13,9 @@
 
 #include "../includes/ft_ssl.h"
 
-void			md5(t_control *control)
+int			md5(t_control *control)
 {
+	(void)control;
 	ft_printf("je fais md5 sur ");
 	return (1);
 }

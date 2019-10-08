@@ -85,8 +85,7 @@ int				main(int ac, char **av)
 	{
 		if (c == 1)
 		{
-//			make_the_hash(&control);
-			free(control.cmd);
+			control.cmd(&control);
 			control.fd = 0;
 		}
 		i++;
