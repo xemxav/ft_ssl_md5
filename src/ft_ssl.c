@@ -13,36 +13,6 @@
 
 #include "../includes/ft_ssl.h"
 
-static int				analyse_av(int ac, char **av,
-		t_control *control, int *i)
-{
-	if (*i >= ac)
-		return (-1);
-	if (ac == 1)
-	{
-		*i += 1;
-		return (1);
-	}
-	if (ft_strequ(av[*i], "-p"))
-		control->p = 1;
-	else if (ft_strequ(av[*i], "-q"))
-		control->q = 1;
-	else if (ft_strequ(av[*i], "-r"))
-		control->r = 1;
-	else if (ft_strequ(av[*i], "-s"))
-	{
-		control->message = av[*i + 1];
-		*i += 1;
-		return (1);
-	}
-	else
-	{
-		control->filename = av[*i];
-		return (1);
-	}
-	return (0);
-}
-
 static int 			usage(char	*bad_arg)
 {
 	if (bad_arg == NULL)
@@ -71,25 +41,13 @@ static int				parsing_cmd(char **av, t_control *control)
 int				main(int ac, char **av)
 {
 	t_control	control;
-	int			i;
-	int			c;
 
-	i = 1;
-	c = 0;
 	if (ac == 1)
 		return (usage(NULL));
 	ft_bzero(&control, sizeof(t_control));
 	if (parsing_cmd(av, &control) < 0)
 		return (-1);
-	while ((c = analyse_av(ac, av, &control, &i)) >= 0)
-	{
-		if (c == 1)
-		{
-			control.cmd(&control);
-			control.fd = 0;
-		}
-		i++;
-	}
-	free(control.cmd);
+	control.cmd(&control, ac, av);
+	free_control(&control);
 	return (0);
 }

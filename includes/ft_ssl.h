@@ -16,18 +16,27 @@
 
 # include "../libft/libft.h"
 
-typedef struct		s_control
+# define AUTHFLAGS "pqrs"
+
+typedef struct		s_parsing
 {
-	int				(*cmd)(struct s_control *);
-//	char			*cmd;
-	char			*message;
-	char			*filename;
-	char 			r;
+	int				iac;
+	int				iarg;
+	char			s;
+	char			r;
 	char 			q;
 	char 			p;
+	char			*file;
+}					t_parsing;
+
+typedef struct		s_control
+{
+	int				(*cmd)(struct s_control *, int ac, char **av);
+	char			*hash;
+	char			*message;
+	char			*filename;
 	int 			fd;
 }					t_control;
-
 
 /*
 **		ft_ssl.c
@@ -35,13 +44,19 @@ typedef struct		s_control
 /*
 **		freeing.c
 */
+void			free_control(t_control *control);
 /*
 **		md5.c
 */
-int				md5(t_control *control);
+int				md5(t_control *control, int ac, char **av);
 /*
 **		sha256.c
 */
-int				sha256(t_control *control);
+int				sha256(t_control *control, int ac, char **av);
+/*
+**		parsing_hash.c
+*/
+int			check_flag(char *arg, t_parsing *parsing);
+int			md5_sha256_usage(char *hash, char c, char *filename);
 
 #endif

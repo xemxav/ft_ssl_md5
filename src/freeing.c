@@ -18,4 +18,7 @@ void	free_control(t_control *control)
 	if (control->message != NULL)
 		free(control->message);
 	if (control->filename != NULL)
+		free(control->filename);
+	if (control->hash != NULL)
+		free(control->hash);
 }
