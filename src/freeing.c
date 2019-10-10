@@ -15,10 +15,14 @@
 
 void	free_control(t_control *control)
 {
-	if (control->message != NULL)
-		free(control->message);
-	if (control->filename != NULL)
-		free(control->filename);
 	if (control->hash != NULL)
 		free(control->hash);
+}
+
+void	reset_control(t_control *control)
+{
+	if (control->message != NULL)
+		control->message = NULL;
+	control->p = 0;
+	control->type = 0;
 }

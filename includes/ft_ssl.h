@@ -18,25 +18,23 @@
 
 # define AUTHFLAGS "pqrs"
 
-typedef struct		s_parsing
-{
-	int				iac;
-	int				iarg;
-	char			s;
-	char			r;
-	char 			q;
-	char 			p;
-	char			*file;
-}					t_parsing;
+# define STDIN 1
+# define FILE 0
+# define STRING 2
 
-typedef struct		s_control
+typedef struct			s_control
 {
-	int				(*cmd)(struct s_control *, int ac, char **av);
-	char			*hash;
-	char			*message;
-	char			*filename;
-	int 			fd;
-}					t_control;
+	int					(*cmd)(struct s_control *);
+	char				*hash;
+	char 				*message;
+	int					p;
+	int 				q;
+	int 				r;
+	int					file_only;
+	int					type;
+	struct s_parsing	*args;
+
+}						t_control;
 
 /*
 **		ft_ssl.c
@@ -45,18 +43,21 @@ typedef struct		s_control
 **		freeing.c
 */
 void			free_control(t_control *control);
+void			reset_control(t_control *control);
 /*
 **		md5.c
 */
-int				md5(t_control *control, int ac, char **av);
+int				md5(t_control *control);
 /*
 **		sha256.c
 */
-int				sha256(t_control *control, int ac, char **av);
+int				sha256(t_control *control);
 /*
 **		parsing_hash.c
 */
-int			check_flag(char *arg, t_parsing *parsing);
-int			md5_sha256_usage(char *hash, char c, char *filename);
+int				read_flags(t_control *control, char *arg);
+int				md5_sha256_usage(char *hash, char c, char *filename);
+int 			parsing(t_control *control, int ac, char **av);
+
 
 #endif

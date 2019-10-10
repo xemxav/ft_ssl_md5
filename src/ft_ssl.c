@@ -27,12 +27,17 @@ static int 			usage(char	*bad_arg)
 	return (-1);
 }
 
-static int				parsing_cmd(char **av, t_control *control)
-{
+static int				parsing_cmd(char **av, t_control *control) {
 	if (ft_strequ(av[1], "md5"))
+	{
 		control->cmd = &md5;
+		control->hash = ft_strdup("md5");
+	}
 	else if (ft_strequ(av[1], "sha256"))
+	{
 		control->cmd = &sha256;
+		control->hash = ft_strdup("md5");
+	}
 	else
 		return (usage(av[1]));
 	return (1);
@@ -47,7 +52,7 @@ int				main(int ac, char **av)
 	ft_bzero(&control, sizeof(t_control));
 	if (parsing_cmd(av, &control) < 0)
 		return (-1);
-	control.cmd(&control, ac, av);
+	parsing(&control, ac, av);
 	free_control(&control);
 	return (0);
 }
