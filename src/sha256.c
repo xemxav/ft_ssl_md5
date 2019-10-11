@@ -15,6 +15,10 @@
 
 int			sha256(t_control *control)
 {
+	if (control->type == FILE)
+		control->file_only = 1;
+	control->has_worked = 1;
+	print_control(control);
 	reset_control(control);
 	return (1);
 }

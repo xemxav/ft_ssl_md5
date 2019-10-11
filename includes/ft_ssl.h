@@ -33,6 +33,8 @@ typedef struct			s_control
 	int					file_only;
 	int					type;
 	int 				has_worked;
+	unsigned int		buf[16];
+	ssize_t				size;
 }						t_control;
 
 /*

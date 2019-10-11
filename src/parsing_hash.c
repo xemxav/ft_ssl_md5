@@ -15,7 +15,6 @@
 
 int					md5_sha256_usage(char *hash, char c, char *filename)
 {
-
 	if (filename)
 		ft_printf("%s: %s: No such file or directory\n", hash, filename);
 	else
@@ -26,14 +25,14 @@ int					md5_sha256_usage(char *hash, char c, char *filename)
 	return (-1);
 }
 
-static int			make_s_flag(t_control *control,char  *arg, size_t i)
+static int			make_s_flag(t_control *control, char *arg, size_t i)
 {
 	control->type = STRING;
 	if (i + 1 < ft_strlen(arg))
 	{
-		control->message = (arg + i +1);
+		control->message = (arg + i + 1);
 		printf("arg+ i = %s\n", arg + i + 1);
-		return(control->cmd(control));
+		return (control->cmd(control));
 	}
 	return (1);
 }
@@ -72,8 +71,7 @@ static int			read_flags(t_control *control, char *arg)
 	return (1);
 }
 
-
-int 				parsing(t_control *control, int ac, char **av)
+int					parsing(t_control *control, int ac, char **av)
 {
 	int				i;
 
