@@ -11,10 +11,11 @@ File(GLOB_RECURSE SOURCE
         src/*.c
         includes/*.h)
 
-
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "~/ft_ssl_md5")
 # Build executable
 add_executable(ft_ssl
         ${SOURCE})
 
 find_library(LIBFT ft libft)
 target_link_libraries(ft_ssl LINK_PUBLIC ${LIBFT})
+

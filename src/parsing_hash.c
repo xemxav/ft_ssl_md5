@@ -13,7 +13,7 @@
 
 #include "../includes/ft_ssl.h"
 
-int			md5_sha256_usage(char *hash, char c, char *filename)
+int					md5_sha256_usage(char *hash, char c, char *filename)
 {
 
 	if (filename)
@@ -38,9 +38,18 @@ static int			make_s_flag(t_control *control,char  *arg, size_t i)
 	return (1);
 }
 
-int			read_flags(t_control *control, char *arg)
+static int			make_p_flag(t_control *control)
 {
-	size_t 	i;
+	control->p = 1;
+	control->type = STDIN;
+	if (control->cmd(control) < 0)
+		return (-1);
+	return (1);
+}
+
+static int			read_flags(t_control *control, char *arg)
+{
+	size_t			i;
 
 	i = 1;
 	while (i < ft_strlen(arg))
@@ -53,9 +62,7 @@ int			read_flags(t_control *control, char *arg)
 			control->r = 1;
 		if (arg[i] == 'p')
 		{
-			control->p = 1;
-			control->type = STDIN;
-			if (control->cmd(control) < 0)
+			if (make_p_flag(control) < 0)
 				return (-1);
 		}
 		if (arg[i] == 's')
@@ -66,17 +73,11 @@ int			read_flags(t_control *control, char *arg)
 }
 
 
-int 		parsing(t_control *control, int ac, char **av)
+int 				parsing(t_control *control, int ac, char **av)
 {
-	int		i;
+	int				i;
 
 	i = 2;
-	if (ac == 2)
-	{
-		control->type = STDIN;
-		control->cmd(control);
-		return (0);
-	}
 	while (i < ac)
 	{
 		if (av[i][0] == '-' && !control->file_only)
@@ -91,6 +92,11 @@ int 		parsing(t_control *control, int ac, char **av)
 				return (-1);
 		}
 		i++;
+	}
+	if (!control->has_worked)
+	{
+		control->type = STDIN;
+		return ((control->cmd(control)));
 	}
 	return (0);
 }

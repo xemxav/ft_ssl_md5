@@ -32,8 +32,7 @@ typedef struct			s_control
 	int 				r;
 	int					file_only;
 	int					type;
-	struct s_parsing	*args;
-
+	int 				has_worked;
 }						t_control;
 
 /*
@@ -55,9 +54,10 @@ int				sha256(t_control *control);
 /*
 **		parsing_hash.c
 */
-int				read_flags(t_control *control, char *arg);
 int				md5_sha256_usage(char *hash, char c, char *filename);
 int 			parsing(t_control *control, int ac, char **av);
-
-
+/*
+**		debug.c
+*/
+void			print_control(t_control *control);
 #endif
