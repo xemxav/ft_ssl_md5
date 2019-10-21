@@ -39,6 +39,18 @@ typedef struct			s_control
 	int					end_message;
 }						t_control;
 
+typedef struct          s_md5_worker
+{
+    unsigned int        A;
+    unsigned int        B;
+    unsigned int        C;
+    unsigned int        D;
+
+};
+
+extern unsigned int              s[64];
+extern unsigned int              K[64];
+
 /*
 **		ft_ssl.c
 */
