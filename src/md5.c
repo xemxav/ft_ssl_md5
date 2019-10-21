@@ -34,13 +34,21 @@ void				hash_buf(t_control *control)
 
 static void				padding(t_control *control, ssize_t ret, int i)
 {
+	printf("ret dans paddinf = %zd et i = %d\n", ret, i);
 	if (ret < 4)
 	{
-		control->buf[i] = control->buf[i] & (0x80000000 >> ((4 - ret) * 8));
+		control->buf[i] = control->buf[i] | (0x80000000 >> (ret * 8));
+		printf("buf = %#x\n", control->buf[i]);
+		control->byte_count += (4 - ret) * 8;
 		i++;
 	}
 	else
-		control->buf[i++] = 0x80000000;
+	{
+		i++;
+		control->buf[i] = 0x80000000;
+		control->byte_count += 32;
+		printf("buf n = %#x\n", control->buf[i]);
+	}
 	while (control->byte_count % 512 != 448)
 	{
 		if (i == 15)
@@ -48,15 +56,18 @@ static void				padding(t_control *control, ssize_t ret, int i)
 			i = 0;
 			hash_buf(control);
 		}
-		control->byte_count += 8;
+		control->byte_count += 32;
 		i++;
 	}
 	control->buf[14] = (unsigned int)(control->size >> 32);
 	control->buf[15] = (unsigned int)(control->size & 0xFFFFFFFF);
+	control->end_message = 1;
 }
 
 int 			check_buf(t_control *control, ssize_t ret, int i)
 {
+	if (control->end_message)
+		return (0);
 	if (i < 15 || ret < 4)
 	{
 		control->byte_count = control->size;
@@ -65,7 +76,7 @@ int 			check_buf(t_control *control, ssize_t ret, int i)
 	hash_buf(control);
 	printf("size = %zd\n", control->size);
 	printf("byte count = %zd\n", control->byte_count);
-	return (0);
+	return (1);
 }
 
 int					hash_a_file(t_control *control)
@@ -80,6 +91,7 @@ int					hash_a_file(t_control *control)
 	while ((ret = read(fd, &control->buf[i], 4)) != -1)
 	{
         control->size += ret * 8;
+        printf(" i = %d et ret = %zd\n", i, ret);
 		if (i == 15 || ret < 4)
 		{
 			check_buf(control, ret, i);
@@ -101,7 +113,7 @@ int				md5(t_control *control)
 	if (control->type == FILE)
 		control->file_only = 1;
 	control->has_worked = 1;
-	print_control(control);
+//	print_control(control);
 	if (control->type == FILE)
 		hash_a_file(control);
 	reset_control(control);

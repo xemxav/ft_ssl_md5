@@ -36,6 +36,7 @@ typedef struct			s_control
 	unsigned int		buf[16];
 	ssize_t				size;
 	ssize_t             byte_count;
+	int					end_message;
 }						t_control;
 
 /*
