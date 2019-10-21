@@ -13,19 +13,58 @@
 
 #include "../includes/ft_ssl.h"
 
-static void				bourrage(t_control *control, ssize_t ret, int i)
-{
 
+
+static void				print_buf(t_control *control)
+{
+	int i = 0;
+	while (i < 16)
+	{
+		printf("%#x ", control->buf[i]);
+		i++;
+	}
+	printf("\n");
 }
 
-static int 			hash_buff(t_control *control, ssize_t ret, int i)
+void				hash_buf(t_control *control)
 {
+	print_buf(control);
+	ft_bzero((void*)&control->buf, sizeof(unsigned int) * 16);
+}
 
-	// si ret < 4 il va falloir reappeller hash buff dans hash buff
-	control->size += ret;
+static void				padding(t_control *control, ssize_t ret, int i)
+{
+	if (ret < 4)
+	{
+		control->buf[i] = control->buf[i] & (0x80000000 >> ((4 - ret) * 8));
+		i++;
+	}
+	else
+		control->buf[i++] = 0x80000000;
+	while (control->byte_count % 512 != 448)
+	{
+		if (i == 15)
+		{
+			i = 0;
+			hash_buf(control);
+		}
+		control->byte_count += 8;
+		i++;
+	}
+	control->buf[14] = (unsigned int)(control->size >> 32);
+	control->buf[15] = (unsigned int)(control->size & 0xFFFFFFFF);
+}
+
+int 			check_buf(t_control *control, ssize_t ret, int i)
+{
 	if (i < 15 || ret < 4)
-		bourrage(control, ret, i);
-	printf("je hash buf\n");
+	{
+		control->byte_count = control->size;
+		padding(control, ret, i);
+	}
+	hash_buf(control);
+	printf("size = %zd\n", control->size);
+	printf("byte count = %zd\n", control->byte_count);
 	return (0);
 }
 
@@ -33,20 +72,17 @@ int					hash_a_file(t_control *control)
 {
 	int 			fd;
 	ssize_t			ret;
-	unsigned int 	buf[16];
 	int				i;
 
 	if ((fd = open(control->message, O_RDONLY)) < 0)
 		return (md5_sha256_usage(control->hash, '\0', control->message));
 	i = 0;
-	ft_bzero((void*)&buf, sizeof(int) * 16);
 	while ((ret = read(fd, &control->buf[i], 4)) != -1)
 	{
-		printf("i = %d\n", i);
+        control->size += ret * 8;
 		if (i == 15 || ret < 4)
 		{
-			hash_buff(control, ret, i);
-			ft_bzero((void*)&control->buf, sizeof(unsigned int) * 16);
+			check_buf(control, ret, i);
 			i = 0;
 			if (ret == 0)
 			{

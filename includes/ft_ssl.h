@@ -35,6 +35,7 @@ typedef struct			s_control
 	int 				has_worked;
 	unsigned int		buf[16];
 	ssize_t				size;
+	ssize_t             byte_count;
 }						t_control;
 
 /*
@@ -49,6 +50,7 @@ void			reset_control(t_control *control);
 **		md5.c
 */
 int				md5(t_control *control);
+void			hash_buf(t_control *control);
 /*
 **		sha256.c
 */
