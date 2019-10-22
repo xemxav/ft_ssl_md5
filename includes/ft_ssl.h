@@ -22,6 +22,16 @@
 # define FILE 0
 # define STRING 2
 
+typedef struct          s_md5_worker
+{
+    unsigned int        A;
+    unsigned int        B;
+    unsigned int        C;
+    unsigned int        D;
+    unsigned int        s[64];
+    unsigned int        K[64];
+}                       t_md5_worker;
+
 typedef struct			s_control
 {
 	int					(*cmd)(struct s_control *);
@@ -37,19 +47,10 @@ typedef struct			s_control
 	ssize_t				size;
 	ssize_t             byte_count;
 	int					end_message;
+	struct s_md5_worker *worker;
 }						t_control;
 
-typedef struct          s_md5_worker
-{
-    unsigned int        A;
-    unsigned int        B;
-    unsigned int        C;
-    unsigned int        D;
 
-};
-
-extern unsigned int              s[64];
-extern unsigned int              K[64];
 
 /*
 **		ft_ssl.c
@@ -65,6 +66,10 @@ void			reset_control(t_control *control);
 int				md5(t_control *control);
 void			hash_buf(t_control *control);
 /*
+**		init_md5_worker.c
+*/
+int            init_worker(t_control *control);
+/*
 **		sha256.c
 */
 int				sha256(t_control *control);
@@ -77,4 +82,5 @@ int 			parsing(t_control *control, int ac, char **av);
 **		debug.c
 */
 void			print_control(t_control *control);
+void				print_buf(t_control *control);
 #endif

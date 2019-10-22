@@ -10,3 +10,14 @@ void	print_control(t_control *control)
 	ft_printf("control->file_only = %d\n", control->file_only);
 	ft_printf("control->type = %d\n\n", control->type);
 }
+
+void				print_buf(t_control *control)
+{
+	int i = 0;
+	while (i < 16)
+	{
+		printf("%#x ", control->buf[i]);
+		i++;
+	}
+	printf("\n");
+}

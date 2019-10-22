@@ -13,32 +13,67 @@
 
 #include "../includes/ft_ssl.h"
 
-
-
-static void				print_buf(t_control *control)
-{
-	int i = 0;
-	while (i < 16)
-	{
-		printf("%#x ", control->buf[i]);
-		i++;
-	}
-	printf("\n");
-}
-
 void				hash_buf(t_control *control)
 {
-	print_buf(control);
+    unsigned  int             A;
+    unsigned  int             B;
+    unsigned  int             C;
+    unsigned  int             D;
+    unsigned int             i;
+    unsigned int    F;
+    unsigned int    g;
+
+    i = 0;
+	if (control->worker == NULL)
+	{
+		if (!init_worker(control))
+			return ;
+	}
+	A = control->worker->A;
+    B = control->worker->B;
+    C = control->worker->C;
+    D = control->worker->D;
+    while (i < 64)
+    {
+        if (i < 16)
+        {
+            F = (B & C) | ((~B) & D);
+            g = i;
+        }
+        if (i >= 16 && i < 32)
+        {
+            F = (D & B) | ((~D) & C);
+            g = (5 * i + 1) % 16;
+        }
+        if (i >= 32 && i < 48)
+        {
+            F = B ^ C ^ D;
+            g = (3 * i + 5) % 16;
+        }
+        if (i >= 48 && i < 64)
+        {
+            F = C ^ (B | (~D));
+            g = (7 * i) % 16;
+        }
+        F = F + control->worker->A + control->worker->K[i] + control->buf[g];
+        A = D;
+        D = C;
+        C = B;
+        B = B + (F << control->worker->s[i]) | (F >> (32 - control->worker->s[i]));
+        i++;
+    }
+    control->worker->A += A;
+    control->worker->B += B;
+    control->worker->C += C;
+    control->worker->D += D;
 	ft_bzero((void*)&control->buf, sizeof(unsigned int) * 16);
 }
 
 static void				padding(t_control *control, ssize_t ret, int i)
 {
-	printf("ret dans paddinf = %zd et i = %d\n", ret, i);
 	if (ret < 4)
 	{
 		control->buf[i] = control->buf[i] | (0x80000000 >> (ret * 8));
-		printf("buf = %#x\n", control->buf[i]);
 		control->byte_count += (4 - ret) * 8;
 		i++;
 	}
@@ -47,7 +82,6 @@ static void				padding(t_control *control, ssize_t ret, int i)
 		i++;
 		control->buf[i] = 0x80000000;
 		control->byte_count += 32;
-		printf("buf n = %#x\n", control->buf[i]);
 	}
 	while (control->byte_count % 512 != 448)
 	{
@@ -74,8 +108,6 @@ int 			check_buf(t_control *control, ssize_t ret, int i)
 		padding(control, ret, i);
 	}
 	hash_buf(control);
-	printf("size = %zd\n", control->size);
-	printf("byte count = %zd\n", control->byte_count);
 	return (1);
 }
 
@@ -91,7 +123,6 @@ int					hash_a_file(t_control *control)
 	while ((ret = read(fd, &control->buf[i], 4)) != -1)
 	{
         control->size += ret * 8;
-        printf(" i = %d et ret = %zd\n", i, ret);
 		if (i == 15 || ret < 4)
 		{
 			check_buf(control, ret, i);
@@ -108,6 +139,11 @@ int					hash_a_file(t_control *control)
 	return (1);
 }
 
+void print_digest(t_control *control)
+{
+    printf("digest = %x%x%x%x\n", control->worker->A, control->worker->B, control->worker->C, control->worker->D);
+}
+
 int				md5(t_control *control)
 {
 	if (control->type == FILE)
@@ -116,6 +152,7 @@ int				md5(t_control *control)
 //	print_control(control);
 	if (control->type == FILE)
 		hash_a_file(control);
+	print_digest(control);
 	reset_control(control);
 	return (1);
 }
