@@ -11,13 +11,21 @@ void	print_control(t_control *control)
 	ft_printf("control->type = %d\n\n", control->type);
 }
 
+typedef union   s_test
+{
+    unsigned    x32;
+    char        c[4];
+}               t_test;
+
 void				print_buf(t_control *control)
 {
-	int i = 0;
-	while (i < 16)
-	{
-		printf("%#x ", control->buf[i]);
-		i++;
-	}
+	unsigned char    *tmp;
+
+	tmp = (unsigned char*)control->buf;
+	for (int k = 0; k < 63; k++) {
+        if (k && !(k%4))
+            printf(" ");
+        printf("%.2x", tmp[k]);
+    }
 	printf("\n");
 }
