@@ -26,18 +26,15 @@ void				hash_buf(t_control *control)
     i = 0;
     g = 0;
     F = 0;
-    printf("rentre dans hash_buff\n");
-
-	if (control->worker == NULL)
+	if (control->md5_worker == NULL)
 	{
-		if (!init_worker(control))
+		if (!init_md5_worker(control))
 			return ;
 	}
-    print_buf(control);
-	A = control->worker->A;
-    B = control->worker->B;
-    C = control->worker->C;
-    D = control->worker->D;
+	A = control->md5_worker->A;
+    B = control->md5_worker->B;
+    C = control->md5_worker->C;
+    D = control->md5_worker->D;
     while (i < 64)
     {
         if (i < 16)
@@ -60,40 +57,31 @@ void				hash_buf(t_control *control)
             F = C ^ (B | (~D));
             g = (7 * i) % 16;
         }
-        F = F + A + control->worker->K[i] + control->buf[g];
+        F = F + A + control->md5_worker->K[i] + control->buf[g];
         A = D;
         D = C;
         C = B;
-        B = B + ((F << control->worker->s[i]) | (F >> (32 - control->worker->s[i])));
-        if (!((i+1) % 16))
-        {
-            printf("i = %d\n%d\n%d\n%d\n%d\n", i, A, B, C, D);
-        }
+        B = B + ((F << control->md5_worker->s[i]) | (F >> (32 - control->md5_worker->s[i])));
         i++;
     }
-    control->worker->A += A;
-    control->worker->B += B;
-    control->worker->C += C;
-    control->worker->D += D;
+    control->md5_worker->A += A;
+    control->md5_worker->B += B;
+    control->md5_worker->C += C;
+    control->md5_worker->D += D;
 	ft_bzero((void*)&control->buf, sizeof(unsigned int) * 16);
 }
 
 static void				padding(t_control *control, ssize_t ret, int i)
 {
-    printf("rentre dans padding\n");
 	if (ret && ret < 4)
 	{
-	    printf("avant ret = %zd  et buf[%d] = %#x\n", ret, i, control->buf[i]);
 		control->buf[i] = control->buf[i] | (0x80 << (ret * 8));
-        printf("avant ret = %zd  et buf[%d] = %#x\n", ret, i, control->buf[i]);
 		control->byte_count += (4 - ret) * 8;
 	}
 	else
 	{
 
-        printf("avant ret = %zd  et buf[%d] = %#x\n", ret, i, control->buf[i]);
         control->buf[i] = 0x80;
-        printf("avant ret = %zd  et buf[%d] = %#x\n", ret, i, control->buf[i]);
         control->byte_count += 32;
 	}
     i++;
@@ -114,7 +102,6 @@ static void				padding(t_control *control, ssize_t ret, int i)
 
 int 			check_buf(t_control *control, ssize_t ret, int i)
 {
-    printf("rentre dans check_buf\n");
 	if (control->end_message)
 		return (0);
 	if (i < 15 || ret < 4)
@@ -154,13 +141,17 @@ int					hash_a_file(t_control *control)
 	return (1);
 }
 
-void print_digest(t_control *control)
+void                print_digest(t_control *control)
 {
-    unsigned char    *tmp;
+    unsigned char   *tmp;
+    int             k;
 
-    tmp = (unsigned char*)control->worker;
-    for (int k = 0; k < 16; k++) {
-        printf("%.2x", tmp[k]);
+    k = 0;
+    tmp = (unsigned char*)control->md5_worker;
+    while (k < 16)
+    {
+        ft_printf("%.2x", tmp[k]);
+        k++;
     }
 }
 

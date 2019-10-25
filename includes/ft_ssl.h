@@ -32,6 +32,20 @@ typedef struct          s_md5_worker
     unsigned int        K[64];
 }                       t_md5_worker;
 
+typedef struct          s_sha_worker
+{
+    unsigned int        A;
+    unsigned int        B;
+    unsigned int        C;
+    unsigned int        D;
+    unsigned int        E;
+    unsigned int        F;
+    unsigned int        G;
+    unsigned int        H;
+    unsigned int        w[64];
+    unsigned int        K[64];
+}                       t_sha_worker;
+
 typedef struct			s_control
 {
 	int					(*cmd)(struct s_control *);
@@ -47,7 +61,8 @@ typedef struct			s_control
 	ssize_t				size;
 	ssize_t             byte_count;
 	int					end_message;
-	struct s_md5_worker *worker;
+	struct s_md5_worker *md5_worker;
+    struct s_sha_worker *sha_worker;
 }						t_control;
 
 
@@ -68,7 +83,11 @@ void			hash_buf(t_control *control);
 /*
 **		init_md5_worker.c
 */
-int            init_worker(t_control *control);
+int            init_md5_worker(t_control *control);
+/*
+**		init_sha256_worker.c
+*/
+int            init_sha_worker(t_control *control);
 /*
 **		sha256.c
 */
@@ -82,5 +101,10 @@ int 			parsing(t_control *control, int ac, char **av);
 **		debug.c
 */
 void			print_control(t_control *control);
-void				print_buf(t_control *control);
+void			print_buf(t_control *control);
+/*
+**		ft_memrev.c
+*/
+void                *ft_memrev(void *block, size_t elsize, size_t elnum);
+
 #endif
