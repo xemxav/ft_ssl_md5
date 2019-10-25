@@ -61,7 +61,7 @@ void				hash_buf(t_control *control)
         A = D;
         D = C;
         C = B;
-        B = B + ((F << control->md5_worker->s[i]) | (F >> (32 - control->md5_worker->s[i])));
+        B = B + lefttrotate(F, control->md5_worker->s[i]);
         i++;
     }
     control->md5_worker->A += A;

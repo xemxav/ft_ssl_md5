@@ -46,6 +46,16 @@ typedef struct          s_sha_worker
     unsigned int        K[64];
 }                       t_sha_worker;
 
+typedef struct          s_sha_temp
+{
+    unsigned int        S1;
+    unsigned int        ch;
+    unsigned int        temp1;
+    unsigned int        S0;
+    unsigned int        maj;
+    unsigned int        temp2;
+}                       t_sha_temp;
+
 typedef struct			s_control
 {
 	int					(*cmd)(struct s_control *);
@@ -103,8 +113,10 @@ int 			parsing(t_control *control, int ac, char **av);
 void			print_control(t_control *control);
 void			print_buf(t_control *control);
 /*
-**		ft_memrev.c
+**		utils.c
 */
 void                *ft_memrev(void *block, size_t elsize, size_t elnum);
+unsigned int        rightrotate(unsigned int n, unsigned int d);
+unsigned int        lefttrotate(unsigned int n, unsigned int d);
 
 #endif

@@ -49,6 +49,8 @@ void                    init_w(t_sha_worker *sha_worker, unsigned int buf[16])
     {
         ft_memcpy(sha_worker->w[i], ft_memrev(ft_membuf[i], sizeof(char), 4),
                 sizeof(unsigned int));
+        if (!sha_worker->w[i])
+            return ;
         i++;
     }
 }
@@ -67,7 +69,7 @@ int                     init_sha_worker(t_control *control)
     control->sha_worker->F = 0x9b05688c;
     control->sha_worker->G = 0x1f83d9ab;
     control->sha_worker->H = 0x5be0cd19;
-    init_w(control->sha_worker, control->buf);
+    init_w(control->sha_worker, control->buf); // todo : a proteger
     init_K(control->sha_worker);
     return (1);
 }
