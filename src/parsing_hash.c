@@ -31,8 +31,8 @@ static int			make_s_flag(t_control *control, char *arg, size_t i)
 	if (i + 1 < ft_strlen(arg))
 	{
 		control->message = (arg + i + 1);
-		printf("arg+ i = %s\n", arg + i + 1);
-		return (control->cmd(control));
+		printf("arg+ i = %s\n", arg + i + 1); //todo : a effacer
+		return (process_argument(control));
 	}
 	return (1);
 }
@@ -41,7 +41,7 @@ static int			make_p_flag(t_control *control)
 {
 	control->p = 1;
 	control->type = STDIN;
-	if (control->cmd(control) < 0)
+	if (!process_argument(control))
 		return (-1);
 	return (1);
 }
@@ -86,7 +86,7 @@ int					parsing(t_control *control, int ac, char **av)
 		else
 		{
 			control->message = av[i];
-			if ((control->cmd(control)) < 0)
+			if (!process_argument(control))
 				return (-1);
 		}
 		i++;
@@ -94,7 +94,7 @@ int					parsing(t_control *control, int ac, char **av)
 	if (!control->has_worked)
 	{
 		control->type = STDIN;
-		return ((control->cmd(control)));
+		return (process_argument(control));
 	}
 	return (0);
 }

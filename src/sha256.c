@@ -61,7 +61,7 @@ void        make_sha_magic(t_sha_temp   *temp, t_sha_worker *slave,
                (slave->B & slave->C);
     temp->temp2 = temp->S0 + temp->maj;
 }
-void        hash_256(t_control  *control)
+void        hash_sha256_buf(t_control  *control)
 {
     int     i;
     t_sha_temp   temp;
@@ -83,14 +83,4 @@ void        hash_256(t_control  *control)
     }
     slave_serves_worker(control->sha_worker, &slave);
     ft_bzero((void*)&control->buf, sizeof(unsigned int) * 16);
-}
-
-int			sha256(t_control *control)
-{
-	if (control->type == FILE)
-		control->file_only = 1;
-	control->has_worked = 1;
-	print_control(control);
-	reset_control(control);
-	return (1);
 }

@@ -25,4 +25,17 @@ void	reset_control(t_control *control)
 		control->message = NULL;
 	control->p = 0;
 	control->type = 0;
+	control->size = 0;
+	control->byte_count = 0;
+	control->end_message = 0;
+	if (control->sha_worker)
+	{
+		free(control->md5_worker);
+		control->md5_worker = NULL;
+	}
+	if (control->sha_worker)
+	{
+		free(control->sha_worker);
+		control->sha_worker = NULL;
+	}
 }

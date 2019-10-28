@@ -21,6 +21,8 @@
 # define STDIN 1
 # define FILE 0
 # define STRING 2
+# define TRUE 1
+# define FALSE 0
 
 typedef struct          s_md5_worker
 {
@@ -58,7 +60,7 @@ typedef struct          s_sha_temp
 
 typedef struct			s_control
 {
-	int					(*cmd)(struct s_control *);
+	int					(*hash_func)(struct s_control *);
 	char				*hash;
 	char 				*message;
 	int					p;
@@ -81,6 +83,10 @@ typedef struct			s_control
 **		ft_ssl.c
 */
 /*
+**		process_argument.c
+*/
+int 			process_argument(t_control *control);
+/*
 **		freeing.c
 */
 void			free_control(t_control *control);
@@ -88,8 +94,7 @@ void			reset_control(t_control *control);
 /*
 **		md5.c
 */
-int				md5(t_control *control);
-void			hash_buf(t_control *control);
+int				hash_md5_buf(t_control *control);
 /*
 **		init_md5_worker.c
 */
@@ -101,7 +106,7 @@ int            init_sha_worker(t_control *control);
 /*
 **		sha256.c
 */
-int				sha256(t_control *control);
+int				hash_sha256_buf(t_control *control);
 /*
 **		parsing_hash.c
 */

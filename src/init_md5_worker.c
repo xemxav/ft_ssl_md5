@@ -50,12 +50,12 @@ int                     init_md5_worker(t_control *control)
 {
     control->md5_worker = (t_md5_worker*)malloc(sizeof(t_md5_worker)); //todo : securiser le malloc
     if (control->md5_worker == NULL)
-            return (0);
+            return (FALSE);
     control->md5_worker->A = 0x67452301;
     control->md5_worker->B = 0xefcdab89;
     control->md5_worker->C = 0x98badcfe;
     control->md5_worker->D = 0x10325476;
     init_s(control->md5_worker);
     init_K(control->md5_worker);
-    return (1);
+    return (TRUE);
 }
