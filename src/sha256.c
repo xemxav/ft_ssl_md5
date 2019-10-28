@@ -13,11 +13,11 @@
 
 #include "../includes/ft_ssl.h"
 
-void        create_msa(t_sha_worker *worker)
+void                create_msa(t_sha_worker *worker)
 {
-    int     i;
-    unsigned int s0;
-    unsigned int s1;
+    int             i;
+    unsigned int    s0;
+    unsigned int    s1;
 
     i = 16;
     while (i < 64)
@@ -59,6 +59,18 @@ void        make_sha_magic(t_sha_temp *temp, t_sha_worker *slave,
                (slave->B & slave->C);
     temp->temp2 = temp->S0 + temp->maj;
 }
+
+static void        add_temp_to_slave(t_sha_temp *temp, t_sha_worker *slave)
+{
+    slave->H = slave->G;
+    slave->G = slave->F;
+    slave->F = slave->E;
+    slave->E = slave->D + temp->temp1;
+    slave->D = slave->C;
+    slave->B = slave->A;
+    slave->A = temp->temp1 + temp->temp2;
+}
+
 int        hash_sha256_buf(t_control  *control)
 {
     int     i;
@@ -77,6 +89,7 @@ int        hash_sha256_buf(t_control  *control)
     while (i < 63)
     {
         make_sha_magic(&temp, &slave, control, i);
+        add_temp_to_slave(&temp, &slave);
         i++;
     }
     slave_serves_worker(control->sha_worker, &slave);

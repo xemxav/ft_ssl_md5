@@ -44,9 +44,8 @@ static int              init_w(t_sha_worker *sha_worker, unsigned int buf[16])
     ft_bzero(sha_worker->w, sizeof(unsigned int) * 64);
     while (i < 16)
     {
-//        ft_memcpy((void*)&sha_worker->w[i], ft_memrev((void*)&buf[i],
-//                sizeof(char), 4), sizeof(unsigned int));
-        ft_memcpy((void*)&sha_worker->w[i], (void*)&buf[i], sizeof(unsigned int));
+        ft_memcpy((void*)&sha_worker->w[i], ft_memrev((void*)&buf[i],
+                sizeof(char), 4), sizeof(unsigned int));
         if (!sha_worker->w[i])
             return (FALSE);
         i++;

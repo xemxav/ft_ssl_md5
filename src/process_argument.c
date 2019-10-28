@@ -15,6 +15,7 @@
 
 static void				write_size(t_control *control)
 {
+
 	if (control->hash_func == &hash_md5_buf)
 	{
 		control->buf[15] = (unsigned int)(control->size >> 32);
@@ -22,13 +23,19 @@ static void				write_size(t_control *control)
 	}
 	else if (control->hash_func == &hash_sha256_buf)
 	{
+		printf("size av memrev %.16lx\n", control->size);
+//		ft_memrev(&control->size, sizeof(char), 8);
+		printf("size av memrev %.16lx\n", control->size);
 		control->buf[14] = (unsigned int)(control->size >> 32);
 		control->buf[15] = (unsigned int)(control->size & 0xFFFFFFFF);
+		printf("buf[14] = %.8x\n", control->buf[14]);
+		printf("buf[15] = %.8x\n", control->buf[15]);
 	}
 }
 
 static void				padding(t_control *control, ssize_t ret, int i)
 {
+	//todo : verifier que padding ok pour sha256
 	if (ret && ret < 4)
 	{
 		control->buf[i] = control->buf[i] | (0x80 << (ret * 8));
@@ -120,6 +127,7 @@ static void                print_digest(t_control *control)
 		ft_printf("%.2x", control->sha_worker->G);
 		ft_printf("%.2x", control->sha_worker->H);
 	}
+	ft_putchar('\n');
 }
 
 int				process_argument(t_control *control)
