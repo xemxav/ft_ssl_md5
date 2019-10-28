@@ -100,11 +100,25 @@ static void                print_digest(t_control *control)
 	int             k;
 
 	k = 0;
-	tmp = (unsigned char*)control->md5_worker;
-	while (k < 16)
+	if (control->hash_func == &hash_md5_buf)
 	{
-		ft_printf("%.2x", tmp[k]);
-		k++;
+		tmp = (unsigned char*)control->md5_worker;
+		while (k < 16)
+		{
+			ft_printf("%.2x", tmp[k]);
+			k++;
+		}
+	}
+	else
+	{
+		ft_printf("%.2x", control->sha_worker->A);
+		ft_printf("%.2x", control->sha_worker->B);
+		ft_printf("%.2x", control->sha_worker->C);
+		ft_printf("%.2x", control->sha_worker->D);
+		ft_printf("%.2x", control->sha_worker->E);
+		ft_printf("%.2x", control->sha_worker->F);
+		ft_printf("%.2x", control->sha_worker->G);
+		ft_printf("%.2x", control->sha_worker->H);
 	}
 }
 

@@ -13,8 +13,6 @@
 
 #include "../includes/ft_ssl.h"
 
-
-
 void        create_msa(t_sha_worker *worker)
 {
     int     i;
@@ -47,21 +45,21 @@ void        slave_serves_worker(t_sha_worker *worker, t_sha_worker *slave)
     worker->H += slave->H;
 }
 
-void        make_sha_magic(t_sha_temp   *temp, t_sha_worker *slave,
+void        make_sha_magic(t_sha_temp *temp, t_sha_worker *slave,
         t_control *control, int i)
 {
     temp->S1 = rightrotate(slave->E, 6) ^ rightrotate(slave->E, 11) ^
               rightrotate(slave->E, 25);
     temp->ch = (slave->E & slave->F) ^ ((~slave->E) & slave->G);
-    temp->temp1 = temp->H + temp->S1 + temp->ch + control->sha_worker->K[i] +
+    temp->temp1 = slave->H + temp->S1 + temp->ch + control->sha_worker->K[i] +
                  control->sha_worker->w[i];
     temp->S0 = rightrotate(slave->A, 2) ^ rightrotate(slave->A, 13) ^
-              lefttrotate(temp->A, 22);
+              lefttrotate(slave->A, 22);
     temp->maj = (slave->A & slave->B) ^ (slave->A & slave->C) ^
                (slave->B & slave->C);
     temp->temp2 = temp->S0 + temp->maj;
 }
-void        hash_sha256_buf(t_control  *control)
+int        hash_sha256_buf(t_control  *control)
 {
     int     i;
     t_sha_temp   temp;
@@ -71,11 +69,11 @@ void        hash_sha256_buf(t_control  *control)
     if (control->sha_worker == NULL)
     {
         if (!init_sha_worker(control))
-            return ;
+            return (FALSE);
     }
     ft_bzero((void*)&temp, sizeof(t_sha_temp));
     ft_memcpy(&slave, control->sha_worker, sizeof(t_sha_worker));
-    create_msa(worker);
+    create_msa(control->sha_worker);
     while (i < 63)
     {
         make_sha_magic(&temp, &slave, control, i);
@@ -83,4 +81,5 @@ void        hash_sha256_buf(t_control  *control)
     }
     slave_serves_worker(control->sha_worker, &slave);
     ft_bzero((void*)&control->buf, sizeof(unsigned int) * 16);
+    return (TRUE);
 }

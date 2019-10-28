@@ -36,23 +36,22 @@ static void             init_K(t_sha_worker *sha_worker)
     ft_memcpy(sha_worker->K, K, sizeof(unsigned int) * 64);
 }
 
-void                    init_w(t_sha_worker *sha_worker, unsigned int buf[16])
+static int              init_w(t_sha_worker *sha_worker, unsigned int buf[16])
 {
     int                 i;
-    int                 j;
-    unsigned char       w[4];
 
-    i = 64;
-
+    i = 0;
     ft_bzero(sha_worker->w, sizeof(unsigned int) * 64);
     while (i < 16)
     {
-        ft_memcpy(sha_worker->w[i], ft_memrev(ft_membuf[i], sizeof(char), 4),
-                sizeof(unsigned int));
+//        ft_memcpy((void*)&sha_worker->w[i], ft_memrev((void*)&buf[i],
+//                sizeof(char), 4), sizeof(unsigned int));
+        ft_memcpy((void*)&sha_worker->w[i], (void*)&buf[i], sizeof(unsigned int));
         if (!sha_worker->w[i])
-            return ;
+            return (FALSE);
         i++;
     }
+    return (TRUE);
 }
 
 

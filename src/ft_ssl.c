@@ -30,12 +30,12 @@ static int 			usage(char	*bad_arg)
 static int				parsing_cmd(char **av, t_control *control) {
 	if (ft_strequ(av[1], "md5"))
 	{
-		control->cmd = &hash_md5_buf;
+		control->hash_func = &hash_md5_buf;
 		control->hash = ft_strdup("MD5");
 	}
 	else if (ft_strequ(av[1], "sha256"))
 	{
-		control->cmd = &hash_sha256_buf;
+		control->hash_func = &hash_sha256_buf;
 		control->hash = ft_strdup("SHA256");
 	}
 	else
