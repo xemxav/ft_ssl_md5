@@ -59,6 +59,7 @@ static void				padding(t_control *control, ssize_t ret, int i)
 	}
 	write_size(control);
 	control->end_message = 1;
+	print_buf(control);
 }
 
 int 			check_buf(t_control *control, ssize_t ret, int i)

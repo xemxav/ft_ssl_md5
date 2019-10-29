@@ -5,8 +5,8 @@
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: xmoreau <xmoreau@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/10/25 19:03:23 by xmoreau      #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/25 19:03:23 by xmoreau     ###    #+. /#+    ###.fr     */
+/*   Created: 2019/10/29 09:47:19 by xmoreau      #+#   ##    ##    #+#       */
+/*   Updated: 2019/10/29 09:47:19 by xmoreau     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,25 +23,25 @@ unsigned int		lefttrotate(unsigned int n, unsigned int d)
 	return ((n << d) | (n >> (32 - d)));
 }
 
-void			*ft_memrev(void *block, size_t elsize, size_t elnum)
+void				*ft_memrev(void *block, size_t elsize, size_t elnum)
 {
-    size_t		i;
-    unsigned char	*tmp;
+	size_t			i;
+	unsigned char	*tmp;
 
-    i = 0;
-    tmp = (unsigned char *) malloc(sizeof(unsigned char) * elsize);
-    if (!tmp)
-	    return (NULL);
-    while (i <= elnum - 1)
-    {
-	    ft_memmove(tmp, block + (elsize * (elnum - 1)), elsize);
-	    ft_memmove(block + (elsize * (elnum - 1)),
+	i = 0;
+	tmp = (unsigned char *) malloc(sizeof(unsigned char) * elsize);
+	if (!tmp)
+		return (NULL);
+	while (i <= elnum - 1)
+	{
+		ft_memmove(tmp, block + (elsize * (elnum - 1)), elsize);
+		ft_memmove(block + (elsize * (elnum - 1)),
 		block + (i * elsize), elsize);
-	    ft_memmove(block + (i * elsize), tmp, elsize);
-	    elnum--;
-	    ft_bzero((void *) tmp, sizeof(unsigned char) * elsize);
-	    i++;
-    }
-    free(tmp);
-    return (block);
+		ft_memmove(block + (i * elsize), tmp, elsize);
+		elnum--;
+		ft_bzero((void *) tmp, sizeof(unsigned char) * elsize);
+		i++;
+	}
+	free(tmp);
+	return (block);
 }
