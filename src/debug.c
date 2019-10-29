@@ -22,10 +22,31 @@ void				print_buf(t_control *control)
 	unsigned char    *tmp;
 
 	tmp = (unsigned char*)control->buf;
-	for (int k = 0; k < 63; k++) {
+	for (int k = 0; k < 64; k++) {
         if (k && !(k%4))
             printf(" ");
         printf("%.2x", tmp[k]);
     }
+	printf("\n");
+}
+
+void				print_int(unsigned int i)
+{
+	unsigned char    *tmp;
+
+	tmp = (unsigned char*)&i;
+	for (int k = 0; k < 4; k++) {
+		printf("%.2x", tmp[k]);
+	}
+}
+
+void print_buf2(t_control *control)
+{
+	for (int i = 0; i < 16; i++)
+	{
+		print_int(control->buf[i]);
+		if (i != 15)
+			printf(" ");
+	}
 	printf("\n");
 }

@@ -72,6 +72,22 @@ static void			add_temp_to_slave(t_sha_temp *temp, t_sha_worker *slave)
 	slave->A = temp->temp1 + temp->temp2;
 }
 
+void				print_sha_worker(t_sha_worker *worker)
+{
+	printf("%.8x\n", worker->A);
+	printf("%.8x\n", worker->B);
+	printf("%.8x\n", worker->C);
+	printf("%.8x\n", worker->D);
+	printf("%.8x\n", worker->E);
+	printf("%.8x\n", worker->F);
+	printf("%.8x\n", worker->G);
+	printf("%.8x\n", worker->H);
+	for (int i = 0; i < 63; i++){
+		printf("%d : %.8x ", i+1, worker->w[i]);
+	}
+	printf("\n");
+}
+
 int					hash_sha256_buf(t_control *control)
 {
 	int				i;
@@ -86,6 +102,7 @@ int					hash_sha256_buf(t_control *control)
 	}
 	ft_bzero((void*)&temp, sizeof(t_sha_temp));
 	ft_memcpy(&slave, control->sha_worker, sizeof(t_sha_worker));
+	print_sha_worker(control->sha_worker);
 	create_msa(control->sha_worker);
 	while (i < 63)
 	{

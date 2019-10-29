@@ -15,22 +15,17 @@
 
 static void				write_size(t_control *control)
 {
+	if (control->hash_func == &hash_sha256_buf)
+	{
+//		printf("size av memrev %.16lx\n", control->size);
+		ft_memrev(&control->size, sizeof(char), 8);
+//		printf("size ap memrev %.16lx\n", control->size);
 
-	if (control->hash_func == &hash_md5_buf)
-	{
-		control->buf[15] = (unsigned int)(control->size >> 32);
-		control->buf[14] = (unsigned int)(control->size & 0xFFFFFFFF);
 	}
-	else if (control->hash_func == &hash_sha256_buf)
-	{
-		printf("size av memrev %.16lx\n", control->size);
-//		ft_memrev(&control->size, sizeof(char), 8);
-		printf("size av memrev %.16lx\n", control->size);
-		control->buf[14] = (unsigned int)(control->size >> 32);
-		control->buf[15] = (unsigned int)(control->size & 0xFFFFFFFF);
-		printf("buf[14] = %.8x\n", control->buf[14]);
-		printf("buf[15] = %.8x\n", control->buf[15]);
-	}
+	control->buf[15] = (unsigned int)(control->size >> 32);
+	control->buf[14] = (unsigned int)(control->size & 0xFFFFFFFF);
+//	printf("buf[14] = %.8x\n", control->buf[14]);
+//	printf("buf[15] = %.8x\n", control->buf[15]);
 }
 
 static void				padding(t_control *control, ssize_t ret, int i)
@@ -59,7 +54,8 @@ static void				padding(t_control *control, ssize_t ret, int i)
 	}
 	write_size(control);
 	control->end_message = 1;
-	print_buf(control);
+//	print_buf(control);
+//	print_buf2(control);
 }
 
 int 			check_buf(t_control *control, ssize_t ret, int i)
@@ -119,14 +115,14 @@ static void                print_digest(t_control *control)
 	}
 	else
 	{
-		ft_printf("%.2x", control->sha_worker->A);
-		ft_printf("%.2x", control->sha_worker->B);
-		ft_printf("%.2x", control->sha_worker->C);
-		ft_printf("%.2x", control->sha_worker->D);
-		ft_printf("%.2x", control->sha_worker->E);
-		ft_printf("%.2x", control->sha_worker->F);
-		ft_printf("%.2x", control->sha_worker->G);
-		ft_printf("%.2x", control->sha_worker->H);
+		print_int(control->sha_worker->A);
+		print_int(control->sha_worker->B);
+		print_int(control->sha_worker->C);
+		print_int(control->sha_worker->D);
+		print_int(control->sha_worker->E);
+		print_int(control->sha_worker->F);
+		print_int(control->sha_worker->G);
+		print_int(control->sha_worker->H);
 	}
 	ft_putchar('\n');
 }

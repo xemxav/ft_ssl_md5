@@ -117,6 +117,8 @@ int 					parsing(t_control *control, int ac, char **av);
 */
 void			print_control(t_control *control);
 void			print_buf(t_control *control);
+void			print_int(unsigned int i);
+void			print_buf2(t_control *control);
 /*
 **		utils.c
 */
