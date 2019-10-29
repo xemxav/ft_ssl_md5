@@ -26,6 +26,7 @@ static void				write_size(t_control *control)
 	control->buf[14] = (unsigned int)(control->size & 0xFFFFFFFF);
 //	printf("buf[14] = %.8x\n", control->buf[14]);
 //	printf("buf[15] = %.8x\n", control->buf[15]);
+
 }
 
 static void				padding(t_control *control, ssize_t ret, int i)
@@ -53,6 +54,7 @@ static void				padding(t_control *control, ssize_t ret, int i)
 		i++;
 	}
 	write_size(control);
+	print_buf(control);
 	control->end_message = 1;
 //	print_buf(control);
 //	print_buf2(control);
@@ -101,6 +103,7 @@ static int					hash_a_file(t_control *control)
 static void                print_digest(t_control *control)
 {
 	unsigned char   *tmp;
+	unsigned int	*tmp2;
 	int             k;
 
 	k = 0;
@@ -115,14 +118,20 @@ static void                print_digest(t_control *control)
 	}
 	else
 	{
-		print_int(control->sha_worker->A);
-		print_int(control->sha_worker->B);
-		print_int(control->sha_worker->C);
-		print_int(control->sha_worker->D);
-		print_int(control->sha_worker->E);
-		print_int(control->sha_worker->F);
-		print_int(control->sha_worker->G);
-		print_int(control->sha_worker->H);
+		tmp2 = (unsigned int*)control->sha_worker;
+		while (k < 8)
+		{
+			ft_printf("%.8x", tmp2[k]);
+			k++;
+		}
+//		print_int(control->sha_worker->A);
+//		print_int(control->sha_worker->B);
+//		print_int(control->sha_worker->C);
+//		print_int(control->sha_worker->D);
+//		print_int(control->sha_worker->E);
+//		print_int(control->sha_worker->F);
+//		print_int(control->sha_worker->G);
+//		print_int(control->sha_worker->H);
 	}
 	ft_putchar('\n');
 }

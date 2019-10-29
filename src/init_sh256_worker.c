@@ -36,28 +36,14 @@ static void			 	init_K(t_sha_worker *sha_worker)
 	ft_memcpy(sha_worker->K, K, sizeof(unsigned int) * 64);
 }
 
-static int			 	init_w(t_control *control)
-{
-	int					i;
 
-	i = 0;
-	print_buf2(control);
-	ft_bzero(control->sha_worker->w, sizeof(unsigned int) * 64);
-	while (i < 16)
-	{
-		ft_memcpy((void*)&(control->sha_worker->w[i]), ft_memrev((void*)&(control->buf[i]),
-				sizeof(char), 4), sizeof(unsigned int));
-		i++;
-	}
-	return (TRUE);
-}
 
 
 int					 	init_sha_worker(t_control *control)
 {
 	control->sha_worker = (t_sha_worker*)malloc(sizeof(t_sha_worker)); //todo : securiser le malloc
 	if (control->sha_worker == NULL)
-			return (0);
+			return (FALSE);
 	control->sha_worker->A = 0x6a09e667;
 	control->sha_worker->B = 0xbb67ae85;
 	control->sha_worker->C = 0x3c6ef372;
@@ -66,7 +52,7 @@ int					 	init_sha_worker(t_control *control)
 	control->sha_worker->F = 0x9b05688c;
 	control->sha_worker->G = 0x1f83d9ab;
 	control->sha_worker->H = 0x5be0cd19;
-	init_w(control); // todo : a proteger
+	ft_bzero(control->sha_worker->w, sizeof(unsigned int) * 64);
 	init_K(control->sha_worker);
-	return (1);
+	return (TRUE);
 }

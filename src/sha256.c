@@ -13,6 +13,27 @@
 
 #include "../includes/ft_ssl.h"
 
+void				print_sha_worker(t_sha_worker *worker)
+{
+	printf("%.8x\n", worker->A);
+	printf("%.8x\n", worker->B);
+	printf("%.8x\n", worker->C);
+	printf("%.8x\n", worker->D);
+	printf("%.8x\n", worker->E);
+	printf("%.8x\n", worker->F);
+	printf("%.8x\n", worker->G);
+	printf("%.8x\n", worker->H);
+	for (int i = 0; i < 64; i++){
+		printf(" %d : ", i);
+		print_int(worker->w[i]);
+	}
+	printf("\n");
+//	for (int i = 0; i < 64; i++){
+//		printf("%d : %.8x ", i+1, worker->K[i]);
+//	}
+//	printf("\n");
+}
+
 void				create_msa(t_sha_worker *worker)
 {
 	int				i;
@@ -46,16 +67,15 @@ void				slave_serves_worker(t_sha_worker *worker,
 	worker->H += slave->H;
 }
 
-void				make_sha_magic(t_sha_temp *temp, t_sha_worker *slave,
-		t_control *control, int i)
+void				make_sha_magic(t_sha_temp *temp, t_sha_worker *slave, int i)
 {
 	temp->S1 = rightrotate(slave->E, 6) ^ rightrotate(slave->E, 11) ^
 			rightrotate(slave->E, 25);
-	temp->ch = (slave->E & slave->F) ^ ((~slave->E) & slave->G);
-	temp->temp1 = slave->H + temp->S1 + temp->ch + control->sha_worker->K[i] +
-			control->sha_worker->w[i];
+	temp->ch = (slave->E & slave->F) ^ ((~(slave->E)) & slave->G);
+	temp->temp1 = slave->H + temp->S1 + temp->ch + slave->K[i] +
+			slave->w[i];
 	temp->S0 = rightrotate(slave->A, 2) ^ rightrotate(slave->A, 13) ^
-			lefttrotate(slave->A, 22);
+			rightrotate(slave->A, 22);
 	temp->maj = (slave->A & slave->B) ^ (slave->A & slave->C) ^
 			(slave->B & slave->C);
 	temp->temp2 = temp->S0 + temp->maj;
@@ -68,24 +88,25 @@ static void			add_temp_to_slave(t_sha_temp *temp, t_sha_worker *slave)
 	slave->F = slave->E;
 	slave->E = slave->D + temp->temp1;
 	slave->D = slave->C;
+	slave->C = slave->B;
 	slave->B = slave->A;
 	slave->A = temp->temp1 + temp->temp2;
 }
 
-void				print_sha_worker(t_sha_worker *worker)
+static int			 	init_w(t_sha_worker *worker, unsigned int *buf)
 {
-	printf("%.8x\n", worker->A);
-	printf("%.8x\n", worker->B);
-	printf("%.8x\n", worker->C);
-	printf("%.8x\n", worker->D);
-	printf("%.8x\n", worker->E);
-	printf("%.8x\n", worker->F);
-	printf("%.8x\n", worker->G);
-	printf("%.8x\n", worker->H);
-	for (int i = 0; i < 63; i++){
-		printf("%d : %.8x ", i+1, worker->w[i]);
+	int					i;
+
+	i = 0;
+//	ft_bzero(worker->w, sizeof(unsigned int) * 64);
+	while (i < 16)
+	{
+		ft_memcpy((void*)&(worker->w[i]), ft_memrev((void*)&(buf[i]),
+				sizeof(char), 4), sizeof(unsigned int));
+//		ft_memcpy((void*)&(worker->w[i]),(void*)&(buf[i]), sizeof(unsigned int));
+		i++;
 	}
-	printf("\n");
+	return (TRUE);
 }
 
 int					hash_sha256_buf(t_control *control)
@@ -102,14 +123,18 @@ int					hash_sha256_buf(t_control *control)
 	}
 	ft_bzero((void*)&temp, sizeof(t_sha_temp));
 	ft_memcpy(&slave, control->sha_worker, sizeof(t_sha_worker));
-	print_sha_worker(control->sha_worker);
-	create_msa(control->sha_worker);
-	while (i < 63)
+//	print_sha_worker(&slave);
+	init_w(&slave, control->buf);
+//	print_sha_worker(&slave);
+	create_msa(&slave);
+//	print_sha_worker(&slave);
+	while (i < 64)
 	{
-		make_sha_magic(&temp, &slave, control, i);
+		make_sha_magic(&temp, &slave, i);
 		add_temp_to_slave(&temp, &slave);
 		i++;
 	}
+//	print_sha_worker(&slave);
 	slave_serves_worker(control->sha_worker, &slave);
 	ft_bzero((void*)&control->buf, sizeof(unsigned int) * 16);
 	return (TRUE);
