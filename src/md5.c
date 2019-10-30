@@ -15,6 +15,7 @@
 
 int				hash_md5_buf(t_control *control)
 {
+	print_buf(control);
 	unsigned  int			 A;
 	unsigned  int			 B;
 	unsigned  int			 C;

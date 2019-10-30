@@ -24,14 +24,14 @@ static void				write_size(t_control *control)
 	}
 	control->buf[15] = (unsigned int)(control->size >> 32);
 	control->buf[14] = (unsigned int)(control->size & 0xFFFFFFFF);
+	control->end_message = 1;
 //	printf("buf[14] = %.8x\n", control->buf[14]);
 //	printf("buf[15] = %.8x\n", control->buf[15]);
 
 }
 
-static void				padding(t_control *control, ssize_t ret, int i)
+void				padding(t_control *control, ssize_t ret, int i)
 {
-	//todo : verifier que padding ok pour sha256
 	if (ret && ret < 4)
 	{
 		control->buf[i] = control->buf[i] | (0x80 << (ret * 8));
@@ -43,6 +43,13 @@ static void				padding(t_control *control, ssize_t ret, int i)
 		control->byte_count += 32;
 	}
 	i++;
+	if (i == 13)
+	{
+		write_size(control);
+		return ;
+	}
+	if (i > 13)
+		return ;
 	while (control->byte_count % 512 != 448 && control->byte_count < 448)
 	{
 		if (i == 15)
@@ -54,8 +61,7 @@ static void				padding(t_control *control, ssize_t ret, int i)
 		i++;
 	}
 	write_size(control);
-	print_buf(control);
-	control->end_message = 1;
+//	print_buf(control);
 //	print_buf(control);
 //	print_buf2(control);
 }
@@ -146,8 +152,8 @@ int				process_argument(t_control *control)
 	}
 //	else if (control->type == STDIN)
 //		hash_stdin(control);
-//	else if (control->type == STRING)
-//		hash_a_string(control);
+	else if (control->type == STRING)
+		hash_a_string(control);
 	else
 		return (FALSE);
 	print_digest(control);
