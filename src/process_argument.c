@@ -34,6 +34,7 @@ void				padding(t_control *control, ssize_t ret, int i)
 {
 //	unsigned char *tmp;
 
+//	printf("ret =%zd et i =%d\n", ret, i);
 	if (ret && ret < 4)
 		control->buf[i] = control->buf[i] | (0x80 << (ret * 8));
 	else
@@ -96,17 +97,19 @@ int 			check_buf(t_control *control, ssize_t ret, int i)
 static int		read_a_fd(t_control *control, int fd)
 {
 	int				i;
+	int 			ret;
 
 	if (control->end_message)
 		return (1);
 	i = 0;
-	while (read(fd, (unsigned char*)control->buf + i, 1) && i < 64)
+	while ((ret = read(fd, (unsigned char*)control->buf + i, 1)) && i < 64)
 	{
 		control->size += 8;
 		i++;
 	}
-	if (i < 63)
-		padding(control, i + 1 % 4, i / 4);
+	if (i < 64)
+		padding(control, i  % 4, i / 4);
+//	printf("i = %d", i);
 	control->hash_func(control);
 	return (read_a_fd(control, fd));
 }
