@@ -11,11 +11,11 @@ void	print_control(t_control *control)
 	ft_printf("control->type = %d\n\n", control->type);
 }
 
-typedef union   s_test
-{
-    unsigned    x32;
-    char        c[4];
-}               t_test;
+//typedef union   s_test
+//{
+//    unsigned    x32;
+//    char        c[4];
+//}               t_test;
 
 void				print_buf(t_control *control)
 {

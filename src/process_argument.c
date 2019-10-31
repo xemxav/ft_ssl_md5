@@ -32,38 +32,15 @@ static void				write_size(t_control *control)
 
 void				padding(t_control *control, ssize_t ret, int i)
 {
+//	unsigned char *tmp;
+
 	if (ret && ret < 4)
-	{
 		control->buf[i] = control->buf[i] | (0x80 << (ret * 8));
-		control->byte_count += (4 - ret) * 8;
-	}
 	else
-	{
 		control->buf[i] = 0x80;
-		control->byte_count += 32;
-	}
-	i++;
-	if (i == 13)
-	{
-		write_size(control);
-		return ;
-	}
-	if (i > 13)
-		return ;
-	while (control->byte_count % 512 != 448 && control->byte_count < 448)
-	{
-		if (i == 15)
-		{
-			i = 0;
-			control->hash_func(control);
-		}
-		control->byte_count += 32;
-		i++;
-	}
+	if (i + 1 > 14)
+		control->hash_func(control);
 	write_size(control);
-//	print_buf(control);
-//	print_buf(control);
-//	print_buf2(control);
 }
 
 int 			check_buf(t_control *control, ssize_t ret, int i)

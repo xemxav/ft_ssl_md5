@@ -24,10 +24,7 @@ int 			hash_a_string(t_control *control)
 	control->size += len * 8;
 	control->message += len;
 	if (len < 64)
-	{
-		control->byte_count = control->size;
-		padding(control, len % 4, (int)(len % 16));
-	}
+		padding(control, len % 4, (int)(len / 4));
 	control->hash_func(control);
 	return (hash_a_string(control));
 }

@@ -71,7 +71,6 @@ typedef struct			s_control
 	int 				has_worked;
 	unsigned int		buf[16];
 	ssize_t				size;
-	ssize_t			 byte_count;
 	int					end_message;
 	struct s_md5_worker	*md5_worker;
 	struct s_sha_worker	*sha_worker;
