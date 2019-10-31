@@ -106,7 +106,7 @@ static int		read_a_fd(t_control *control, int fd)
 		i++;
 	}
 	if (i < 63)
-		padding(control, i % 4, i / 4);
+		padding(control, i + 1 % 4, i / 4);
 	control->hash_func(control);
 	return (read_a_fd(control, fd));
 }
