@@ -48,41 +48,68 @@ int 			check_buf(t_control *control, ssize_t ret, int i)
 	if (control->end_message)
 		return (0);
 	if (i < 15 || ret < 4)
-	{
-		control->byte_count = control->size;
 		padding(control, ret, i);
-	}
 	return (control->hash_func(control));
 }
 
-static int					hash_a_file(t_control *control)
+//static int					read_a_fd(t_control *control, int fd)
+//{
+//	ssize_t			ret;
+//	int				i;
+//
+//	i = 0;
+//	while ((ret = read(fd, &control->buf[i], 4)) != -1)
+//	{
+//		control->size += ret * 8;
+//		if (i == 15 || ret < 4)
+//		{
+//			check_buf(control, ret, i);
+//			i = 0;
+//			if (ret == 0)
+//			{
+//				if (fd)
+//					close(fd);
+//				return (0);
+//			}
+//		}
+//		else
+//			i++;
+//	}
+//	return (1);
+//}
+
+//static int			read_a_fd(t_control *control, int fd)
+//{
+//	int 	ret;
+//
+//	if (control->end_message)
+//		return (1);
+//	ret = read(fd, control->buf, 64);
+//	control->size += ret * 8;
+//	if (ret < 64)
+//		padding(control, ret % 4, ret / 4);
+//	control->hash_func(control);
+//	return (read_a_fd(control, fd));
+//}
+
+
+static int		read_a_fd(t_control *control, int fd)
 {
-	int 			fd;
-	ssize_t			ret;
 	int				i;
 
-	if ((fd = open(control->message, O_RDONLY)) < 0)
-		return (md5_sha256_usage(control->hash, '\0', control->message));
+	if (control->end_message)
+		return (1);
 	i = 0;
-	while ((ret = read(fd, &control->buf[i], 4)) != -1)
+	while (read(fd, (unsigned char*)control->buf + i, 1) && i < 64)
 	{
-		control->size += ret * 8;
-		if (i == 15 || ret < 4)
-		{
-			check_buf(control, ret, i);
-			i = 0;
-			if (ret == 0)
-			{
-				close(fd);
-				return (0);
-			}
-		}
-		else
-			i++;
+		control->size += 8;
+		i++;
 	}
-	return (1);
+	if (i < 63)
+		padding(control, i % 4, i / 4);
+	control->hash_func(control);
+	return (read_a_fd(control, fd));
 }
-
 static void                print_digest(t_control *control)
 {
 	unsigned char   *tmp;
@@ -119,16 +146,31 @@ static void                print_digest(t_control *control)
 	ft_putchar('\n');
 }
 
+int 			get_fd(t_control *control)
+{
+	int fd;
+
+	if ((fd = open(control->message, O_RDONLY)) < 0)
+		return (md5_sha256_usage(control->hash, '\0', control->message));
+	else
+		return (fd);
+}
+
 int				process_argument(t_control *control)
 {
+	int fd;
+
 	control->has_worked = 1;
 	if (control->type == FILE)
 	{
 		control->file_only = 1;
-		hash_a_file(control);
+		if ((fd = get_fd(control)) < 0)
+			return (FALSE);
+		read_a_fd(control, fd);
+		close(fd);
 	}
-//	else if (control->type == STDIN)
-//		hash_stdin(control);
+	else if (control->type == STDIN)
+		read_a_fd(control, 0);
 	else if (control->type == STRING)
 		hash_a_string(control);
 	else

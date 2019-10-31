@@ -28,3 +28,4 @@ int 			hash_a_string(t_control *control)
 	control->hash_func(control);
 	return (hash_a_string(control));
 }
+
