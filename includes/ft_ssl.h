@@ -84,9 +84,11 @@ typedef struct			s_control
 /*
 **		process_argument.c
 */
-void					padding(t_control *control, ssize_t ret, int i);
 int 					process_argument(t_control *control);
-int 					hash_a_string(t_control *control);
+/*
+**		print_digest.c
+*/
+void 					print_digest(t_control *control);
 /*
 **		freeing.c
 */
