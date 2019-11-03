@@ -30,6 +30,8 @@ typedef struct			s_md5_worker
 	unsigned int		B;
 	unsigned int		C;
 	unsigned int		D;
+	unsigned int		F;
+	unsigned int		g;
 	unsigned int		s[64];
 	unsigned int		K[64];
 }						t_md5_worker;

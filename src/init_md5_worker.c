@@ -55,6 +55,8 @@ int					 init_md5_worker(t_control *control)
 	control->md5_worker->B = 0xefcdab89;
 	control->md5_worker->C = 0x98badcfe;
 	control->md5_worker->D = 0x10325476;
+	control->md5_worker->F = 0;
+	control->md5_worker->g = 0;
 	init_s(control->md5_worker);
 	init_K(control->md5_worker);
 	return (TRUE);

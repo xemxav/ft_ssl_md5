@@ -98,12 +98,10 @@ static int			 	init_w(t_sha_worker *worker, unsigned int *buf)
 	int					i;
 
 	i = 0;
-//	ft_bzero(worker->w, sizeof(unsigned int) * 64);
 	while (i < 16)
 	{
 		ft_memcpy((void*)&(worker->w[i]), ft_memrev((void*)&(buf[i]),
 				sizeof(char), 4), sizeof(unsigned int));
-//		ft_memcpy((void*)&(worker->w[i]),(void*)&(buf[i]), sizeof(unsigned int));
 		i++;
 	}
 	return (TRUE);
@@ -123,18 +121,14 @@ int					hash_sha256_buf(t_control *control)
 	}
 	ft_bzero((void*)&temp, sizeof(t_sha_temp));
 	ft_memcpy(&slave, control->sha_worker, sizeof(t_sha_worker));
-//	print_sha_worker(&slave);
 	init_w(&slave, control->buf);
-//	print_sha_worker(&slave);
 	create_msa(&slave);
-//	print_sha_worker(&slave);
 	while (i < 64)
 	{
 		make_sha_magic(&temp, &slave, i);
 		add_temp_to_slave(&temp, &slave);
 		i++;
 	}
-//	print_sha_worker(&slave);
 	slave_serves_worker(control->sha_worker, &slave);
 	ft_bzero((void*)&control->buf, sizeof(unsigned int) * 16);
 	return (TRUE);
