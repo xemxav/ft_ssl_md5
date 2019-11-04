@@ -86,7 +86,7 @@ int						process_argument(t_control *control)
 	{
 		control->file_only = 1;
 		if ((fd = get_fd(control)) < 0)
-			return (FALSE);
+			return (TRUE);
 		read_a_fd(control, fd);
 		close(fd);
 	}

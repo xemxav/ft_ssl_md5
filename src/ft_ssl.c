@@ -27,6 +27,8 @@ static int			usage(char *bad_arg)
 	return (-1);
 }
 
+
+//todo : a changer avec un tableau de fonction
 static int			parsing_cmd(char **av, t_control *control)
 {
 	if (ft_strequ(av[1], "md5"))

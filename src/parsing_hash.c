@@ -16,13 +16,16 @@
 int					md5_sha256_usage(char *hash, char c, char *filename)
 {
 	if (filename)
+	{
 		ft_printf("%s: %s: No such file or directory\n", hash, filename);
+		return (-1);
+	}
 	else
 	{
 		ft_printf("%s: illegal option -- %c\n", hash, c);
 		ft_printf("usage: %s [-pqr] [-s string] [files ...]\n", hash);
 	}
-	return (-1);
+	return (FALSE);
 }
 
 static int			make_s_flag(t_control *control, char *arg, size_t i)
