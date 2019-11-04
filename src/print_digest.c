@@ -20,6 +20,11 @@ void                print_digest(t_control *control)
 	int             k;
 
 	k = 0;
+//	print_control(control);
+	if (control->type != STDIN && control->q == 0)
+		ft_printf("%s (%s) = ", control->hash, control->message);
+	if (control->type == STDIN && control->p == 1)
+		ft_printf("%s", control->message);
 	if (control->hash_func == &hash_md5_buf)
 	{
 		tmp = (unsigned char*)control->md5_worker;
@@ -37,14 +42,6 @@ void                print_digest(t_control *control)
 			ft_printf("%.8x", tmp2[k]);
 			k++;
 		}
-//		print_int(control->sha_worker->A);
-//		print_int(control->sha_worker->B);
-//		print_int(control->sha_worker->C);
-//		print_int(control->sha_worker->D);
-//		print_int(control->sha_worker->E);
-//		print_int(control->sha_worker->F);
-//		print_int(control->sha_worker->G);
-//		print_int(control->sha_worker->H);
 	}
 	ft_putchar('\n');
 }

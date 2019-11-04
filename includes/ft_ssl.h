@@ -130,5 +130,6 @@ void			print_buf2(t_control *control);
 void					*ft_memrev(void *block, size_t elsize, size_t elnum);
 unsigned int			rightrotate(unsigned int n, unsigned int d);
 unsigned int			lefttrotate(unsigned int n, unsigned int d);
+int						record_message(t_control *control, unsigned int i);
 
 #endif

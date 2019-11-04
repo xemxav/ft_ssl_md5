@@ -33,7 +33,10 @@ static int				hash_a_string(t_control *control)
 	size_t				len;
 
 	if (control->end_message)
+	{
+		control->message -= control->size / 8;
 		return (1);
+	}
 	len = ft_strlen(control->message);
 	ft_memcpy(control->buf, control->message, len);
 	control->size += len * 8;
@@ -54,6 +57,8 @@ static int				read_a_fd(t_control *control, int fd)
 	while (i < 64 && read(fd, (unsigned char*)control->buf + i, 1))
 	{
 		control->size += 8;
+		if (control->type == STDIN && control->p)
+			record_message(control, i);
 		i++;
 	}
 	if (i < 64)

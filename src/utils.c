@@ -45,3 +45,33 @@ void				*ft_memrev(void *block, size_t elsize, size_t elnum)
 	free(tmp);
 	return (block);
 }
+
+int				record_message(t_control *control, unsigned int i)
+{
+	char 		*tmp;
+	size_t		len;
+
+	if (!control->message)
+	{
+		control->message = ft_strnew(1);
+		if (!control->message)
+			return (FALSE);
+		ft_memcpy(control->message, control->buf + i, 1);
+	}
+	else
+	{
+		len = (size_t)(control->size / 8);
+		tmp = ft_strdup(control->message);
+		if (!tmp)
+			return (FALSE);
+		free(control->message);
+		control->message = ft_strnew(len);
+		if (!control->message)
+			return (FALSE);
+		ft_memcpy(control->message, tmp, len - 1);
+		ft_memcpy(control->message + (len - 1),
+				(unsigned char*)control->buf + i, 1);
+		free(tmp);
+	}
+	return (TRUE);
+}
