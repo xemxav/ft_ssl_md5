@@ -100,6 +100,7 @@ int					hash_sha256_buf(t_control *control)
 	t_sha_worker	slave;
 
 	i = 0;
+	print_buf(control);
 	if (control->sha_worker == NULL)
 	{
 		if (!init_sha_worker(control))

@@ -51,7 +51,7 @@ static int				read_a_fd(t_control *control, int fd)
 	if (control->end_message)
 		return (1);
 	i = 0;
-	while (read(fd, (unsigned char*)control->buf + i, 1) && i < 64)
+	while (i < 64 && read(fd, (unsigned char*)control->buf + i, 1))
 	{
 		control->size += 8;
 		i++;

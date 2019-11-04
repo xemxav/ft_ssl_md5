@@ -52,7 +52,7 @@ int					hash_md5_buf(t_control *control)
 	t_md5_worker	slave;
 
 	i = 0;
-	printf("%p\n", control);
+//	print_buf(control);
 	if (!(control->md5_worker))
 	{
 		if (!init_md5_worker(control))
