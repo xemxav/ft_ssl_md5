@@ -41,6 +41,9 @@ static int			make_s_flag(t_control *control, char *arg, size_t i)
 
 static int			make_p_flag(t_control *control)
 {
+//	print_control(control);
+	if (control->p == 1)
+		return (ft_printf("d41d8cd98f00b204e9800998ecf8427e\n"));
 	control->p = 1;
 	control->type = STDIN;
 	if (!process_argument(control))

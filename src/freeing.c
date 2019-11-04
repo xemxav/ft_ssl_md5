@@ -28,7 +28,6 @@ void	reset_control(t_control *control)
 	}
 	if (control->message != NULL)
 		control->message = NULL;
-	control->p = 0;
 	control->type = 0;
 	control->size = 0;
 	control->end_message = 0;
