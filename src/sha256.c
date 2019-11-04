@@ -34,7 +34,7 @@ void				print_sha_worker(t_sha_worker *worker)
 //	printf("\n");
 }
 
-void				create_msa(t_sha_worker *worker)
+static void			create_msa(t_sha_worker *worker)
 {
 	int				i;
 	unsigned int	s0;
@@ -54,7 +54,7 @@ void				create_msa(t_sha_worker *worker)
 	}
 }
 
-void				slave_serves_worker(t_sha_worker *worker,
+static void			slave_serves_worker(t_sha_worker *worker,
 		t_sha_worker *slave)
 {
 	worker->A += slave->A;
@@ -67,12 +67,12 @@ void				slave_serves_worker(t_sha_worker *worker,
 	worker->H += slave->H;
 }
 
-void				make_sha_magic(t_sha_temp *temp, t_sha_worker *slave, int i)
+static void			make_sha_magic(t_sha_temp *temp, t_sha_worker *slave, int i)
 {
 	temp->S1 = rightrotate(slave->E, 6) ^ rightrotate(slave->E, 11) ^
 			rightrotate(slave->E, 25);
 	temp->ch = (slave->E & slave->F) ^ ((~(slave->E)) & slave->G);
-	temp->temp1 = slave->H + temp->S1 + temp->ch + slave->K[i] +
+	temp->temp1 = slave->H + temp->S1 + temp->ch + g_k_sha[i] +
 			slave->w[i];
 	temp->S0 = rightrotate(slave->A, 2) ^ rightrotate(slave->A, 13) ^
 			rightrotate(slave->A, 22);
@@ -91,20 +91,6 @@ static void			add_temp_to_slave(t_sha_temp *temp, t_sha_worker *slave)
 	slave->C = slave->B;
 	slave->B = slave->A;
 	slave->A = temp->temp1 + temp->temp2;
-}
-
-static int			 	init_w(t_sha_worker *worker, unsigned int *buf)
-{
-	int					i;
-
-	i = 0;
-	while (i < 16)
-	{
-		ft_memcpy((void*)&(worker->w[i]), ft_memrev((void*)&(buf[i]),
-				sizeof(char), 4), sizeof(unsigned int));
-		i++;
-	}
-	return (TRUE);
 }
 
 int					hash_sha256_buf(t_control *control)

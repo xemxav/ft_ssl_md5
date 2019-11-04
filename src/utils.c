@@ -15,7 +15,7 @@
 
 unsigned int		rightrotate(unsigned int n, unsigned int d)
 {
-	 return ((n >> d) | (n << (32 - d)));
+	return ((n >> d) | (n << (32 - d)));
 }
 
 unsigned int		lefttrotate(unsigned int n, unsigned int d)
@@ -29,7 +29,7 @@ void				*ft_memrev(void *block, size_t elsize, size_t elnum)
 	unsigned char	*tmp;
 
 	i = 0;
-	tmp = (unsigned char *) malloc(sizeof(unsigned char) * elsize);
+	tmp = (unsigned char *)malloc(sizeof(unsigned char) * elsize);
 	if (!tmp)
 		return (NULL);
 	while (i <= elnum - 1)
@@ -39,7 +39,7 @@ void				*ft_memrev(void *block, size_t elsize, size_t elnum)
 		block + (i * elsize), elsize);
 		ft_memmove(block + (i * elsize), tmp, elsize);
 		elnum--;
-		ft_bzero((void *) tmp, sizeof(unsigned char) * elsize);
+		ft_bzero((void *)tmp, sizeof(unsigned char) * elsize);
 		i++;
 	}
 	free(tmp);

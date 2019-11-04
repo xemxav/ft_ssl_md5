@@ -31,7 +31,6 @@ static int			make_s_flag(t_control *control, char *arg, size_t i)
 	if (i + 1 < ft_strlen(arg))
 	{
 		control->message = (arg + i + 1);
-		printf("arg+ i = %s\n", arg + i + 1); //todo : a effacer
 		return (process_argument(control));
 	}
 	return (1);

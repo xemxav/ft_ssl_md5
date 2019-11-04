@@ -23,13 +23,12 @@ static void				padding(t_control *control, ssize_t ret, int i)
 		control->hash_func(control);
 	if (control->hash_func == &hash_sha256_buf)
 		ft_memrev(&control->size, sizeof(char), 8);
-
 	control->buf[15] = (unsigned int)(control->size >> 32);
 	control->buf[14] = (unsigned int)(control->size & 0xFFFFFFFF);
 	control->end_message = 1;
 }
 
-static int 				hash_a_string(t_control *control)
+static int				hash_a_string(t_control *control)
 {
 	size_t				len;
 
@@ -58,13 +57,12 @@ static int				read_a_fd(t_control *control, int fd)
 		i++;
 	}
 	if (i < 64)
-		padding(control, i  % 4, i / 4);
+		padding(control, i % 4, i / 4);
 	control->hash_func(control);
 	return (read_a_fd(control, fd));
 }
 
-
-static int 				get_fd(t_control *control)
+static int				get_fd(t_control *control)
 {
 	int					fd;
 

@@ -13,7 +13,7 @@
 
 #include "../includes/ft_ssl.h"
 
-static int 			usage(char	*bad_arg)
+static int			usage(char *bad_arg)
 {
 	if (bad_arg == NULL)
 		ft_printf("usage: ft_ssl command [command opts] [command args])\n");
@@ -27,7 +27,8 @@ static int 			usage(char	*bad_arg)
 	return (-1);
 }
 
-static int				parsing_cmd(char **av, t_control *control) {
+static int			parsing_cmd(char **av, t_control *control)
+{
 	if (ft_strequ(av[1], "md5"))
 	{
 		control->hash_func = &hash_md5_buf;
@@ -43,7 +44,7 @@ static int				parsing_cmd(char **av, t_control *control) {
 	return (1);
 }
 
-int				main(int ac, char **av)
+int					main(int ac, char **av)
 {
 	t_control	control;
 

@@ -32,8 +32,6 @@ typedef struct			s_md5_worker
 	unsigned int		D;
 	unsigned int		F;
 	unsigned int		g;
-	unsigned int		s[64];
-	unsigned int		K[64];
 }						t_md5_worker;
 
 typedef struct			s_sha_worker
@@ -47,7 +45,6 @@ typedef struct			s_sha_worker
 	unsigned int		G;
 	unsigned int		H;
 	unsigned int		w[64];
-	unsigned int		K[64];
 }						t_sha_worker;
 
 typedef struct			s_sha_temp
@@ -78,7 +75,9 @@ typedef struct			s_control
 	struct s_sha_worker	*sha_worker;
 }						t_control;
 
-
+unsigned int			g_k_md5[64];
+unsigned int			g_s_md5[64];
+unsigned int			g_k_sha[64];
 
 /*
 **		ft_ssl.c
@@ -103,6 +102,7 @@ int						hash_md5_buf(t_control *control);
 /*
 **		init_md5_worker.c
 */
+int						init_w(t_sha_worker *worker, unsigned int *buf);
 int						init_md5_worker(t_control *control);
 /*
 **		init_sha256_worker.c

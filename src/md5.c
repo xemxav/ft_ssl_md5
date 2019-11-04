@@ -13,7 +13,7 @@
 
 #include "../includes/ft_ssl.h"
 
-static void			make_md5_magic(t_md5_worker *slave, int i)
+static void			make_md5_magic(t_md5_worker *slave, unsigned int i)
 {
 	if (i < 16)
 	{
@@ -35,7 +35,6 @@ static void			make_md5_magic(t_md5_worker *slave, int i)
 		slave->F = slave->C ^ (slave->B | (~slave->D));
 		slave->g = (7 * i) % 16;
 	}
-
 }
 
 static void			slave_serves_worker(t_md5_worker *worker,
@@ -47,7 +46,7 @@ static void			slave_serves_worker(t_md5_worker *worker,
 	worker->D += slave->D;
 }
 
-int 				hash_md5_buf(t_control *control)
+int					hash_md5_buf(t_control *control)
 {
 	unsigned int	i;
 	t_md5_worker	slave;
@@ -63,12 +62,11 @@ int 				hash_md5_buf(t_control *control)
 	while (i < 64)
 	{
 		make_md5_magic(&slave, i);
-		slave.F = slave.F + slave.A + control->md5_worker->K[i] +
-				control->buf[slave.g];
+		slave.F = slave.F + slave.A + g_k_md5[i] + control->buf[slave.g];
 		slave.A = slave.D;
 		slave.D = slave.C;
 		slave.C = slave.B;
-		slave.B = slave.B + lefttrotate(slave.F, control->md5_worker->s[i]);
+		slave.B = slave.B + lefttrotate(slave.F, g_s_md5[i]);
 		i++;
 	}
 	slave_serves_worker(control->md5_worker, &slave);
