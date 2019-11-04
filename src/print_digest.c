@@ -13,18 +13,13 @@
 
 #include "../includes/ft_ssl.h"
 
-void                print_digest(t_control *control)
+static void			print_digest(t_control *control)
 {
-	unsigned char   *tmp;
+	unsigned char	*tmp;
 	unsigned int	*tmp2;
-	int             k;
+	int				k;
 
 	k = 0;
-//	print_control(control);
-	if (control->type != STDIN && control->q == 0)
-		ft_printf("%s (%s) = ", control->hash, control->message);
-	if (control->type == STDIN && control->p == 1)
-		ft_printf("%s", control->message);
 	if (control->hash_func == &hash_md5_buf)
 	{
 		tmp = (unsigned char*)control->md5_worker;
@@ -43,5 +38,17 @@ void                print_digest(t_control *control)
 			k++;
 		}
 	}
+}
+
+void				print_result(t_control *control)
+{
+
+	if (control->type != STDIN && !control->q && !control->r)
+		ft_printf("%s (%s) = ", control->hash, control->message);
+	if (control->type == STDIN && control->p == 1 && !control->q)
+		ft_printf("%s", control->message);
+	print_digest(control);
+	if (control->r && !control->q && control->type != STDIN)
+		ft_printf(" \"%s\"", control->message);
 	ft_putchar('\n');
 }

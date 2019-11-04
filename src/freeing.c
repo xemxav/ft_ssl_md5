@@ -21,6 +21,11 @@ void	free_control(t_control *control)
 
 void	reset_control(t_control *control)
 {
+	if (control->type == STDIN && control->p)
+	{
+		free(control->message);
+		control->message = NULL;
+	}
 	if (control->message != NULL)
 		control->message = NULL;
 	control->p = 0;

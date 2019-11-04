@@ -96,7 +96,7 @@ int						process_argument(t_control *control)
 		hash_a_string(control);
 	else
 		return (FALSE);
-	print_digest(control);
+	print_result(control);
 	reset_control(control);
 	return (TRUE);
 }

@@ -89,7 +89,7 @@ int 					process_argument(t_control *control);
 /*
 **		print_digest.c
 */
-void 					print_digest(t_control *control);
+void 					print_result(t_control *control);
 /*
 **		freeing.c
 */
