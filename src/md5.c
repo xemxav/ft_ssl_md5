@@ -52,13 +52,14 @@ int					hash_md5_buf(t_control *control)
 	t_md5_worker	slave;
 
 	i = 0;
+	printf("%p\n", control);
 	if (!(control->md5_worker))
 	{
 		if (!init_md5_worker(control))
 			return (FALSE);
 	}
-	ft_bzero(&slave, sizeof(t_sha_worker));
-	ft_memcpy(&slave, control->md5_worker, sizeof(t_sha_worker));
+	ft_bzero(&slave, sizeof(t_md5_worker));
+	ft_memcpy(&slave, control->md5_worker, sizeof(t_md5_worker));
 	while (i < 64)
 	{
 		make_md5_magic(&slave, i);
