@@ -42,12 +42,22 @@ static void			print_digest(t_control *control)
 
 void				print_result(t_control *control)
 {
-	if (control->type != STDIN && !control->q && !control->r)
-		ft_printf("%s (\"%s\") = ", control->hash, control->message);
+	if (!control->r && !control->q)
+	{
+		if (control->type == FILE)
+			ft_printf("%s (%s) = ", control->hash, control->message);
+		if (control->type == STRING)
+			ft_printf("%s (\"%s\") = ", control->hash, control->message);
+	}
 	if (control->type == STDIN && control->p == 1)
 		ft_printf("%s", control->message);
 	print_digest(control);
-	if (control->r && !control->q && control->type != STDIN)
-		ft_printf(" \"%s\"", control->message);
+	if (control->r && !control->q)
+	{
+		if (control->type == FILE)
+			ft_printf(" %s", control->hash, control->message);
+		if (control->type == STRING)
+			ft_printf(" \"%s\"", control->hash, control->message);
+	}
 	ft_putchar('\n');
 }

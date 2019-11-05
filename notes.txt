@@ -1,5 +1,18 @@
-pour quitter openssl -> exit ou quit
+reste a faire :
 
-./ft_ssl sha256/md5 flag argument
+- norme ft_ssl.h une fois debug enlevé
+- faire un tableau de tableau de pointeur sur fonction pour le choix de la commande
+- voir pour factorisation du code
+- faire Makefile
+- faire test de amathys
+- faire impression en fonction des types
 
-Trouver comment verifier si stdin est "plein", dans ce cas la bas besoin d'avoir -s
+- faire usage erreur avec minuscule
+
+➜ ft_ssl_md5 git:(master) ✗ echo "coucou" | md5 -q -p
+coucou
+4c2383f5c88e9110642953b5dd7c88a1
+d41d8cd98f00b204e9800998ecf8427e
+➜ ft_ssl_md5 git:(master) ✗ echo "coucou" | ./ft_ssl md5 -q -p
+coucou
+4c2383f5c88e9110642953b5dd7c88a1
