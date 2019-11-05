@@ -42,10 +42,9 @@ static void			print_digest(t_control *control)
 
 void				print_result(t_control *control)
 {
-
 	if (control->type != STDIN && !control->q && !control->r)
 		ft_printf("%s (\"%s\") = ", control->hash, control->message);
-	if (control->type == STDIN && control->p == 1 && !control->q)
+	if (control->type == STDIN && control->p == 1)
 		ft_printf("%s", control->message);
 	print_digest(control);
 	if (control->r && !control->q && control->type != STDIN)

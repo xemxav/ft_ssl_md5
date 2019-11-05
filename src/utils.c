@@ -46,15 +46,14 @@ void				*ft_memrev(void *block, size_t elsize, size_t elnum)
 	return (block);
 }
 
-int				record_message(t_control *control, unsigned int i)
+int					record_message(t_control *control, unsigned int i)
 {
-	char 		*tmp;
-	size_t		len;
+	char			*tmp;
+	size_t			len;
 
 	if (!control->message)
 	{
-		control->message = ft_strnew(1);
-		if (!control->message)
+		if (!(control->message = ft_strnew(1)))
 			return (FALSE);
 		ft_memcpy(control->message, control->buf + i, 1);
 	}
@@ -65,8 +64,7 @@ int				record_message(t_control *control, unsigned int i)
 		if (!tmp)
 			return (FALSE);
 		free(control->message);
-		control->message = ft_strnew(len);
-		if (!control->message)
+		if (!(control->message = ft_strnew(len)))
 			return (FALSE);
 		ft_memcpy(control->message, tmp, len - 1);
 		ft_memcpy(control->message + (len - 1),

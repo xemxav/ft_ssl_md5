@@ -11,12 +11,6 @@ void	print_control(t_control *control)
 	ft_printf("control->type = %d\n\n", control->type);
 }
 
-//typedef union   s_test
-//{
-//    unsigned    x32;
-//    char        c[4];
-//}               t_test;
-
 void				print_buf(t_control *control)
 {
 	unsigned char    *tmp;
@@ -49,4 +43,24 @@ void print_buf2(t_control *control)
 			printf(" ");
 	}
 	printf("\n");
+}
+void				print_sha_worker(t_sha_worker *worker)
+{
+	printf("%.8x\n", worker->A);
+	printf("%.8x\n", worker->B);
+	printf("%.8x\n", worker->C);
+	printf("%.8x\n", worker->D);
+	printf("%.8x\n", worker->E);
+	printf("%.8x\n", worker->F);
+	printf("%.8x\n", worker->G);
+	printf("%.8x\n", worker->H);
+	for (int i = 0; i < 64; i++){
+		printf(" %d : ", i);
+		print_int(worker->w[i]);
+	}
+	printf("\n");
+//	for (int i = 0; i < 64; i++){
+//		printf("%d : %.8x ", i+1, worker->K[i]);
+//	}
+//	printf("\n");
 }

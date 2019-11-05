@@ -13,27 +13,6 @@
 
 #include "../includes/ft_ssl.h"
 
-void				print_sha_worker(t_sha_worker *worker)
-{
-	printf("%.8x\n", worker->A);
-	printf("%.8x\n", worker->B);
-	printf("%.8x\n", worker->C);
-	printf("%.8x\n", worker->D);
-	printf("%.8x\n", worker->E);
-	printf("%.8x\n", worker->F);
-	printf("%.8x\n", worker->G);
-	printf("%.8x\n", worker->H);
-	for (int i = 0; i < 64; i++){
-		printf(" %d : ", i);
-		print_int(worker->w[i]);
-	}
-	printf("\n");
-//	for (int i = 0; i < 64; i++){
-//		printf("%d : %.8x ", i+1, worker->K[i]);
-//	}
-//	printf("\n");
-}
-
 static void			create_msa(t_sha_worker *worker)
 {
 	int				i;

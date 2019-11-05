@@ -75,9 +75,9 @@ typedef struct			s_control
 	struct s_sha_worker	*sha_worker;
 }						t_control;
 
-unsigned int			g_k_md5[64];
-unsigned int			g_s_md5[64];
-unsigned int			g_k_sha[64];
+const unsigned int			g_k_md5[64];
+const unsigned int			g_s_md5[64];
+const unsigned int			g_k_sha[64];
 
 /*
 **		ft_ssl.c
@@ -124,6 +124,7 @@ void			print_control(t_control *control);
 void			print_buf(t_control *control);
 void			print_int(unsigned int i);
 void			print_buf2(t_control *control);
+void				print_sha_worker(t_sha_worker *worker);
 /*
 **		utils.c
 */
