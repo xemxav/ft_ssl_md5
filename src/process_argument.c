@@ -54,12 +54,15 @@ static int				read_a_fd(t_control *control, int fd)
 	if (control->end_message)
 		return (1);
 	i = 0;
-	while (i < 64 && read(fd, (unsigned char*)control->buf + i, 1))
+	if (!(control->type == STDIN && control->p > 1))
 	{
-		control->size += 8;
-		if (control->type == STDIN && control->p)
-			record_message(control, i);
-		i++;
+		while (i < 64 && read(fd, (unsigned char*)control->buf + i, 1))
+		{
+			control->size += 8;
+			if (control->type == STDIN && control->p)
+				record_message(control, i);
+			i++;
+		}
 	}
 	if (i < 64)
 		padding(control, i % 4, i / 4);
