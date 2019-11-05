@@ -31,7 +31,7 @@ void	reset_control(t_control *control)
 	control->type = 0;
 	control->size = 0;
 	control->end_message = 0;
-	if (control->sha_worker)
+	if (control->md5_worker)
 	{
 		free(control->md5_worker);
 		control->md5_worker = NULL;
