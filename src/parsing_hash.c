@@ -17,12 +17,12 @@ int					md5_sha256_usage(char *hash, char c, char *filename)
 {
 	if (filename)
 	{
-		ft_printf("%s: %s: No such file or directory\n", hash, filename);
+		ft_printf("ft_sll :%s: %s: No such file or directory\n", hash, filename);
 		return (-1);
 	}
 	else
 	{
-		ft_printf("%s: illegal option -- %c\n", hash, c);
+		ft_printf("ft_ssl: %s: illegal option -- %c\n", hash, c);
 		ft_printf("usage: %s [-pqr] [-s string] [files ...]\n", hash);
 	}
 	return (FALSE);

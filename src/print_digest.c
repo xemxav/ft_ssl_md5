@@ -55,9 +55,9 @@ void				print_result(t_control *control)
 	if (control->r && !control->q)
 	{
 		if (control->type == FILE)
-			ft_printf(" %s", control->hash, control->message);
+			ft_printf(" %s", control->message);
 		if (control->type == STRING)
-			ft_printf(" \"%s\"", control->hash, control->message);
+			ft_printf(" \"%s\"", control->message);
 	}
 	ft_putchar('\n');
 }
