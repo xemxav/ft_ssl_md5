@@ -16,6 +16,8 @@
 
 # include "../libft/libft.h"
 
+# define CMD_NB			2
+
 # define AUTHFLAGS "pqrs"
 
 # define STDIN			1
@@ -79,6 +81,16 @@ const unsigned int			g_k_md5[64];
 const unsigned int			g_s_md5[64];
 const unsigned int			g_k_sha[64];
 
+typedef struct 			s_cmd
+{
+	char 				*cmd_name;
+	int 				(*pars_func)(struct s_cmd *, int, char **);
+	int					(*hash_func)(struct s_control *);
+	int 				reg_number;
+}						t_cmd;
+
+const t_cmd					g_tab_struct[2];
+
 /*
 **		ft_ssl.c
 */
@@ -93,7 +105,6 @@ void 					print_result(t_control *control);
 /*
 **		freeing.c
 */
-void					free_control(t_control *control);
 void					reset_control(t_control *control);
 /*
 **		md5.c
@@ -116,7 +127,7 @@ int						hash_sha256_buf(t_control *control);
 **		parsing_hash.c
 */
 int						md5_sha256_usage(char *hash, char c, char *filename);
-int 					parsing(t_control *control, int ac, char **av);
+int						parsing_hash(t_cmd *cmd, int ac, char **av);
 /*
 **		debug.c
 */

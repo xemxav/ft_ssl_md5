@@ -13,12 +13,6 @@
 
 #include "../includes/ft_ssl.h"
 
-void	free_control(t_control *control)
-{
-	if (control->hash != NULL)
-		free(control->hash);
-}
-
 void	reset_control(t_control *control)
 {
 	if (control->type == STDIN && control->p)

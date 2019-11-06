@@ -27,34 +27,55 @@ static int			usage(char *bad_arg)
 	return (-1);
 }
 
-//todo : a changer avec un tableau de fonction
-static int			parsing_cmd(char **av, t_control *control)
-{
-	if (ft_strequ(av[1], "md5"))
-	{
-		control->hash_func = &hash_md5_buf;
-		control->hash = ft_strdup("MD5");
-	}
-	else if (ft_strequ(av[1], "sha256"))
-	{
-		control->hash_func = &hash_sha256_buf;
-		control->hash = ft_strdup("SHA256");
-	}
-	else
-		return (usage(av[1]));
-	return (1);
+
+//static int			parsing_cmd(char **av, t_cmd *cmd)
+//{
+//	if (ft_strequ(av[1], "md5"))
+//	{
+//		control->hash_func = &hash_md5_buf;
+//		control->hash = av[1];
+//	}
+//	else if (ft_strequ(av[1], "sha256"))
+//	{
+//		control->hash_func = &hash_sha256_buf;
+//		control->hash = av[1];
+//	}
+//	else
+//		return (usage(av[1]));
+//	return (1);
 }
 
-int					main(int ac, char **av)
+const t_cmd g_tab_struct[2] = {
+		{"md5", &parsing_hash, hash_md5_buf, 4},
+		{"sha256", &parsing_hash, hash_sha256_buf, 8}
+		};
+
+static	const t_cmd 		*parsing_cmd(char **av)
 {
-	t_control	control;
+	int 			i;
+
+	i = 0;
+	while (i < CMD_NB)
+	{
+		if (ft_strequ(av[1], g_tab_struct[i].cmd_name))
+		{
+			return (&(g_tab_struct[i]));
+
+		}
+		i++;
+	}
+	return (NULL);
+}
+
+int						main(int ac, char **av)
+{
+	t_cmd	*cmd;
 
 	if (ac == 1)
 		return (usage(NULL));
 	ft_bzero(&control, sizeof(t_control));
-	if (parsing_cmd(av, &control) < 0)
+	if (!(cmd = parsing_cmd(av)))
 		return (-1);
-	parsing(&control, ac, av);
-	free_control(&control);
+	cmd->pars_func(cmd, ac, av);
 	return (0);
 }

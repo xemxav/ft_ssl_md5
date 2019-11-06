@@ -17,9 +17,5 @@ d41d8cd98f00b204e9800998ecf8427e
 coucou
 4c2383f5c88e9110642953b5dd7c88a1
 
-pour usage :
-
-ft_ssl: md5: -s: No such file or directory
-ft_ssl: md5:
 
 ajouter ft_ssl + md5 en minuscul
