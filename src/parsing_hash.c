@@ -21,9 +21,14 @@ int					md5_sha256_usage(char *hash, char c, char *filename)
 				"ft_ssl: %s: %s: No such file or directory\n", hash, filename);
 		return (ERROR);
 	}
-	else
+	else if (c)
 	{
 		fd_printf(2, "ft_ssl: %s: illegal option -- %c\n", hash, c);
+		fd_printf(2, "usage: %s [-pqr] [-s string] [files ...]\n", hash);
+	}
+	else
+	{
+		fd_printf(2, "ft_ssl: %s: illegal option -- s\n", hash);
 		fd_printf(2, "usage: %s [-pqr] [-s string] [files ...]\n", hash);
 	}
 	return (FALSE);
@@ -94,6 +99,8 @@ int					parsing_hash(t_cmd *cmd, int ac, char **av)
 		}
 		i++;
 	}
+	if (control.type == STRING)
+		return (md5_sha256_usage(control.hash, '\0', NULL));
 	if (!control.has_worked)
 	{
 		control.type = STDIN;

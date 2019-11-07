@@ -3,5 +3,6 @@ reste a faire :
 - norme ft_ssl.h une fois debug enlevé
 - faire Makefile
 - faire test de amathys
-	-> long string
 	-> stderr
+
+git
