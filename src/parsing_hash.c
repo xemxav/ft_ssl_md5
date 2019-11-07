@@ -89,7 +89,6 @@ int					parsing_hash(t_cmd *cmd, int ac, char **av)
 		else
 		{
 			control.message = av[i];
-			printf("cm = %s\n",control.message);
 			if (process_argument(&control) == ERROR)
 				return (ERROR);
 		}

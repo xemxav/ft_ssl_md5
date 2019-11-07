@@ -34,14 +34,14 @@ static int				hash_a_string(t_control *control)
 {
 	size_t				len;
 
-	printf("hs cm = %s\n",control->message);
 	if (control->end_message)
 	{
 		control->message -= control->size / 8;
 		return (TRUE);
 	}
 	len = ft_strlen(control->message);
-	//todo : si len > 64 il faut mem cpy que 64
+	if (len >= 64)
+		len = 64;
 	ft_memcpy(control->buf, control->message, len);
 	control->size += len * 8;
 	control->message += len;
@@ -93,7 +93,6 @@ int						process_argument(t_control *control)
 	int 				ret;
 
 	control->has_worked = 1;
-	printf("pa cm = %s\n",control->message);
 	if (control->type == FILE)
 	{
 		control->file_only = 1;
