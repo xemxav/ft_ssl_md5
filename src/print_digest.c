@@ -45,9 +45,9 @@ void				print_result(t_control *control)
 	if (!control->r && !control->q)
 	{
 		if (control->type == FILE)
-			ft_printf("%s (%s) = ", control->hash, control->message);
+			ft_printf("%s (%s) = ", control->hash_maj, control->message);
 		if (control->type == STRING)
-			ft_printf("%s (\"%s\") = ", control->hash, control->message);
+			ft_printf("%s (\"%s\") = ", control->hash_maj, control->message);
 	}
 	if (control->type == STDIN && control->p == 1)
 		ft_printf("%s", control->message);

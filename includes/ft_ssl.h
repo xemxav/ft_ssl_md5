@@ -25,6 +25,7 @@
 # define STRING			2
 # define TRUE			1
 # define FALSE			0
+# define ERROR			-1
 
 typedef struct			s_md5_worker
 {
@@ -63,6 +64,7 @@ typedef struct			s_control
 {
 	int					(*hash_func)(struct s_control *);
 	char				*hash;
+	char				*hash_maj;
 	char 				*message;
 	int					p;
 	int 				q;
@@ -81,19 +83,17 @@ const unsigned int			g_k_md5[64];
 const unsigned int			g_s_md5[64];
 const unsigned int			g_k_sha[64];
 
-typedef struct 			s_cmd
+typedef struct 				s_cmd
 {
-	char 				*cmd_name;
-	int 				(*pars_func)(struct s_cmd *, int, char **);
-	int					(*hash_func)(struct s_control *);
-	int 				reg_number;
-}						t_cmd;
+	char 					*cmd_name;
+	char 					*cmd_name_maj;
+	int 					(*pars_func)(struct s_cmd *, int, char **);
+	int						(*hash_func)(struct s_control *);
+}							t_cmd;
 
-const t_cmd					g_tab_struct[2];
+const t_cmd					g_cmd_tab[2];
 
-/*
-**		ft_ssl.c
-*/
+
 /*
 **		process_argument.c
 */
@@ -106,6 +106,8 @@ void 					print_result(t_control *control);
 **		freeing.c
 */
 void					reset_control(t_control *control);
+int						error_control(t_control *control);
+
 /*
 **		md5.c
 */
@@ -143,5 +145,7 @@ void					*ft_memrev(void *block, size_t elsize, size_t elnum);
 unsigned int			rightrotate(unsigned int n, unsigned int d);
 unsigned int			lefttrotate(unsigned int n, unsigned int d);
 int						record_message(t_control *control, unsigned int i);
+void					init_control(t_control *control, t_cmd *cmd);
+
 
 #endif

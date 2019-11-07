@@ -1,21 +1,7 @@
 reste a faire :
 
 - norme ft_ssl.h une fois debug enlevé
-- faire un tableau de tableau de pointeur sur fonction pour le choix de la commande
-- voir pour factorisation du code
 - faire Makefile
 - faire test de amathys
-- faire impression en fonction des types
-
-- faire usage erreur avec minuscule
-
-➜ ft_ssl_md5 git:(master) ✗ echo "coucou" | md5 -q -p
-coucou
-4c2383f5c88e9110642953b5dd7c88a1
-d41d8cd98f00b204e9800998ecf8427e
-➜ ft_ssl_md5 git:(master) ✗ echo "coucou" | ./ft_ssl md5 -q -p
-coucou
-4c2383f5c88e9110642953b5dd7c88a1
-
-
-ajouter ft_ssl + md5 en minuscul
+	-> long string
+	-> stderr

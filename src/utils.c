@@ -54,7 +54,7 @@ int					record_message(t_control *control, unsigned int i)
 	if (!control->message)
 	{
 		if (!(control->message = ft_strnew(1)))
-			return (FALSE);
+			return (ERROR);
 		ft_memcpy(control->message, control->buf + i, 1);
 	}
 	else
@@ -62,14 +62,22 @@ int					record_message(t_control *control, unsigned int i)
 		len = (size_t)(control->size / 8);
 		tmp = ft_strdup(control->message);
 		if (!tmp)
-			return (FALSE);
+			return (ERROR);
 		free(control->message);
 		if (!(control->message = ft_strnew(len)))
-			return (FALSE);
+			return (ERROR);
 		ft_memcpy(control->message, tmp, len - 1);
 		ft_memcpy(control->message + (len - 1),
 				(unsigned char*)control->buf + i, 1);
 		free(tmp);
 	}
 	return (TRUE);
+}
+
+void			init_control(t_control *control, t_cmd *cmd)
+{
+	ft_bzero((void*)control, sizeof(t_control));
+	control->hash_func = cmd->hash_func;
+	control->hash = cmd->cmd_name;
+	control->hash_maj = cmd->cmd_name_maj;
 }

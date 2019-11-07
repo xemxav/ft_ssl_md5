@@ -36,3 +36,9 @@ void	reset_control(t_control *control)
 		control->sha_worker = NULL;
 	}
 }
+
+int		error_control(t_control *control)
+{
+	reset_control(control);
+	return (ERROR);
+}

@@ -81,8 +81,8 @@ int					hash_sha256_buf(t_control *control)
 	i = 0;
 	if (control->sha_worker == NULL)
 	{
-		if (!init_sha_worker(control))
-			return (FALSE);
+		if (init_sha_worker(control) == ERROR)
+			return (ERROR);
 	}
 	ft_bzero((void*)&temp, sizeof(t_sha_temp));
 	ft_memcpy(&slave, control->sha_worker, sizeof(t_sha_worker));

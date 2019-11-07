@@ -17,13 +17,14 @@ int					md5_sha256_usage(char *hash, char c, char *filename)
 {
 	if (filename)
 	{
-		ft_printf("ft_ssl: %s: %s: No such file or directory\n", hash, filename);
-		return (-1);
+		fd_printf(2,
+				"ft_ssl: %s: %s: No such file or directory\n", hash, filename);
+		return (ERROR);
 	}
 	else
 	{
-		ft_printf("ft_ssl: %s: illegal option -- %c\n", hash, c);
-		ft_printf("usage: %s [-pqr] [-s string] [files ...]\n", hash);
+		fd_printf(2, "ft_ssl: %s: illegal option -- %c\n", hash, c);
+		fd_printf(2, "usage: %s [-pqr] [-s string] [files ...]\n", hash);
 	}
 	return (FALSE);
 }
@@ -36,16 +37,14 @@ static int			make_s_flag(t_control *control, char *arg, size_t i)
 		control->message = (arg + i + 1);
 		return (process_argument(control));
 	}
-	return (1);
+	return (TRUE);
 }
 
 static int			make_p_flag(t_control *control)
 {
 	control->p += 1;
 	control->type = STDIN;
-	if (!process_argument(control))
-		return (-1);
-	return (1);
+	return (process_argument(control));
 }
 
 static int			read_flags(t_control *control, char *arg)
@@ -63,14 +62,14 @@ static int			read_flags(t_control *control, char *arg)
 			control->r = 1;
 		if (arg[i] == 'p')
 		{
-			if (make_p_flag(control) < 0)
-				return (-1);
+			if (make_p_flag(control) == ERROR)
+				return (ERROR);
 		}
 		if (arg[i] == 's')
 			return (make_s_flag(control, arg, i));
 		i++;
 	}
-	return (1);
+	return (TRUE);
 }
 
 int					parsing_hash(t_cmd *cmd, int ac, char **av)
@@ -79,20 +78,20 @@ int					parsing_hash(t_cmd *cmd, int ac, char **av)
 	t_control		control;
 
 	i = 2;
-	control.hash_func = cmd->hash_func;
-	control.hash = cmd->cmd_name;
+	init_control(&control, cmd);
 	while (i < ac)
 	{
 		if (av[i][0] == '-' && !control.file_only)
 		{
-			if ((read_flags(&control, av[i])) <= 0)
-				return (-1);
+			if ((read_flags(&control, av[i])) == ERROR)
+				return (ERROR);
 		}
 		else
 		{
 			control.message = av[i];
-			if (!process_argument(&control))
-				return (-1);
+			printf("cm = %s\n",control.message);
+			if (process_argument(&control) == ERROR)
+				return (ERROR);
 		}
 		i++;
 	}
@@ -101,6 +100,5 @@ int					parsing_hash(t_cmd *cmd, int ac, char **av)
 		control.type = STDIN;
 		return (process_argument(&control));
 	}
-	reset_control(&control);
-	return (0);
+	return (TRUE);
 }

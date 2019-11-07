@@ -49,7 +49,7 @@ int					init_sha_worker(t_control *control)
 {
 	control->sha_worker = (t_sha_worker*)malloc(sizeof(t_sha_worker));
 	if (control->sha_worker == NULL)
-		return (FALSE);
+		return (ERROR);
 	control->sha_worker->A = 0x6a09e667;
 	control->sha_worker->B = 0xbb67ae85;
 	control->sha_worker->C = 0x3c6ef372;

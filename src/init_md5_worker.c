@@ -41,7 +41,7 @@ int					init_md5_worker(t_control *control)
 {
 	control->md5_worker = (t_md5_worker*)malloc(sizeof(t_md5_worker));
 	if (control->md5_worker == NULL)
-		return (FALSE);
+		return (ERROR);
 	control->md5_worker->A = 0x67452301;
 	control->md5_worker->B = 0xefcdab89;
 	control->md5_worker->C = 0x98badcfe;
