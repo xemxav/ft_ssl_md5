@@ -11,8 +11,8 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef SSL_H
-# define SSL_H
+#ifndef FT_SSL_H
+# define FT_SSL_H
 
 # include "../libft/libft.h"
 
@@ -58,20 +58,20 @@ typedef struct			s_sha_temp
 	unsigned int		S0;
 	unsigned int		maj;
 	unsigned int		temp2;
-}					   t_sha_temp;
+}						t_sha_temp;
 
 typedef struct			s_control
 {
 	int					(*hash_func)(struct s_control *);
 	char				*hash;
 	char				*hash_maj;
-	char 				*message;
+	char				*message;
 	int					p;
-	int 				q;
-	int 				r;
+	int					q;
+	int					r;
 	int					file_only;
 	int					type;
-	int 				has_worked;
+	int					has_worked;
 	unsigned int		buf[16];
 	ssize_t				size;
 	int					end_message;
@@ -79,35 +79,31 @@ typedef struct			s_control
 	struct s_sha_worker	*sha_worker;
 }						t_control;
 
-const unsigned int			g_k_md5[64];
-const unsigned int			g_s_md5[64];
-const unsigned int			g_k_sha[64];
+const unsigned int		g_k_md5[64];
+const unsigned int		g_s_md5[64];
+const unsigned int		g_k_sha[64];
 
-typedef struct 				s_cmd
+typedef struct			s_cmd
 {
-	char 					*cmd_name;
-	char 					*cmd_name_maj;
-	int 					(*pars_func)(struct s_cmd *, int, char **);
-	int						(*hash_func)(struct s_control *);
-}							t_cmd;
+	char				*cmd_name;
+	char				*cmd_name_maj;
+	int					(*pars_func)(struct s_cmd *, int, char **);
+	int					(*hash_func)(struct s_control *);
+}						t_cmd;
 
-const t_cmd					g_cmd_tab[2];
-
-
+const t_cmd				g_cmd_tab[2];
 /*
 **		process_argument.c
 */
-int 					process_argument(t_control *control);
+int						process_argument(t_control *control);
 /*
 **		print_digest.c
 */
-void 					print_result(t_control *control);
+void					print_result(t_control *control);
 /*
 **		freeing.c
 */
 void					reset_control(t_control *control);
-int						error_control(t_control *control);
-
 /*
 **		md5.c
 */
@@ -131,14 +127,6 @@ int						hash_sha256_buf(t_control *control);
 int						md5_sha256_usage(char *hash, char c, char *filename);
 int						parsing_hash(t_cmd *cmd, int ac, char **av);
 /*
-**		debug.c
-*/
-void			print_control(t_control *control);
-void			print_buf(t_control *control);
-void			print_int(unsigned int i);
-void			print_buf2(t_control *control);
-void				print_sha_worker(t_sha_worker *worker);
-/*
 **		utils.c
 */
 void					*ft_memrev(void *block, size_t elsize, size_t elnum);
@@ -146,6 +134,5 @@ unsigned int			rightrotate(unsigned int n, unsigned int d);
 unsigned int			lefttrotate(unsigned int n, unsigned int d);
 int						record_message(t_control *control, unsigned int i);
 void					init_control(t_control *control, t_cmd *cmd);
-
 
 #endif
