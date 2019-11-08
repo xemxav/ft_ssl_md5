@@ -12,7 +12,17 @@ PATH_INC = ./includes/
 #                              MALLOC TEST                                  #
 #******************************************************************************#
 
-FILES = ft_ssl md5 sha256 freeing parsing_hash
+FILES = freeing \
+		ft_ssl \
+		init_md5_worker \
+		init_sh256_worker \
+		md5 \
+		parsing_hash \
+		print_digest \
+		process_argument \
+		sha256 \
+		usages \
+		utils
 
 OBJ = $(addprefix $(PATH_OBJ), $(addsuffix .o , $(FILES)))
 SRC = $(addprefix $(PATH_SRC), $(addsuffix .c , $(FILES)))
