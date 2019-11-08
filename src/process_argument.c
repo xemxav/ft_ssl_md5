@@ -90,7 +90,7 @@ static int				get_fd(t_control *control)
 int						process_argument(t_control *control)
 {
 	int					fd;
-	int 				ret;
+	int					ret;
 
 	control->has_worked = 1;
 	if (control->type == FILE)

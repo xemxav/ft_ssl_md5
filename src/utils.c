@@ -74,7 +74,7 @@ int					record_message(t_control *control, unsigned int i)
 	return (TRUE);
 }
 
-void			init_control(t_control *control, t_cmd *cmd)
+void				init_control(t_control *control, t_cmd *cmd)
 {
 	ft_bzero((void*)control, sizeof(t_control));
 	control->hash_func = cmd->hash_func;
