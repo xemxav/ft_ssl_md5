@@ -80,9 +80,13 @@ static int				read_a_fd(t_control *control, int fd)
 static int				get_fd(t_control *control)
 {
 	int					fd;
+	struct stat			stat;
 
 	if ((fd = open(control->message, O_RDONLY)) < 0)
-		return (md5_sha256_usage(control->hash, '\0', control->message));
+		return (md5_sha256_usage(control->hash, '\0', control->message, NULL));
+	fstat(fd, &stat);
+	if (S_ISDIR(stat.st_mode))
+		return (md5_sha256_usage(control->hash, '\0', NULL, control->message));
 	else
 		return (fd);
 }

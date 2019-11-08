@@ -13,25 +13,20 @@
 
 #include "../includes/ft_ssl.h"
 
-int					md5_sha256_usage(char *hash, char c, char *filename)
+int					md5_sha256_usage(char *hash, char c, char *filename,
+		char *dirname)
 {
 	if (filename)
-	{
 		fd_printf(2, "ft_ssl: %s: %s: No such file or directory\n"
 				, hash, filename);
-		return (ERROR);
-	}
 	else if (c)
 	{
 		fd_printf(2, "ft_ssl: %s: illegal option -- %c\n", hash, c);
 		fd_printf(2, "usage: %s [-pqr] [-s string] [files ...]\n", hash);
 	}
-	else
-	{
-		fd_printf(2, "ft_ssl: %s: illegal option -- s\n", hash);
-		fd_printf(2, "usage: %s [-pqr] [-s string] [files ...]\n", hash);
-	}
-	return (FALSE);
+	else if (dirname)
+		fd_printf(2, "%s: %s: Is a directory\n", hash, dirname);
+	return (ERROR);
 }
 
 int					usage(char *bad_arg)

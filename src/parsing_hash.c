@@ -39,7 +39,7 @@ static int			read_flags(t_control *control, char *arg)
 	while (i < ft_strlen(arg))
 	{
 		if (!ft_strchr(AUTHFLAGS, arg[i]))
-			return (md5_sha256_usage(control->hash, arg[i], NULL));
+			return (md5_sha256_usage(control->hash, arg[i], NULL, NULL));
 		if (arg[i] == 'q')
 			control->q = 1;
 		if (arg[i] == 'r')
@@ -86,7 +86,7 @@ int					parsing_hash(t_cmd *cmd, int ac, char **av)
 		i++;
 	}
 	if (control.type == STRING)
-		return (md5_sha256_usage(control.hash, '\0', NULL));
+		return (md5_sha256_usage(control.hash, 's', NULL, NULL));
 	if (!control.has_worked)
 	{
 		control.type = STDIN;

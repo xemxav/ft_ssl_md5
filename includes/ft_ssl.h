@@ -15,6 +15,8 @@
 # define FT_SSL_H
 
 # include "../libft/libft.h"
+# include <sys/types.h>
+# include <sys/stat.h>
 
 # define CMD_NB			2
 
@@ -133,6 +135,7 @@ void					init_control(t_control *control, t_cmd *cmd);
 /*
 **		usages.c
 */
-int						md5_sha256_usage(char *hash, char c, char *filename);
+int						md5_sha256_usage(char *hash, char c, char *filename,
+						char *dirname);
 int						usage(char *bad_arg);
 #endif
