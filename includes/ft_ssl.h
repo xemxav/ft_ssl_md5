@@ -124,7 +124,6 @@ int						hash_sha256_buf(t_control *control);
 /*
 **		parsing_hash.c
 */
-int						md5_sha256_usage(char *hash, char c, char *filename);
 int						parsing_hash(t_cmd *cmd, int ac, char **av);
 /*
 **		utils.c
@@ -134,5 +133,9 @@ unsigned int			rightrotate(unsigned int n, unsigned int d);
 unsigned int			lefttrotate(unsigned int n, unsigned int d);
 int						record_message(t_control *control, unsigned int i);
 void					init_control(t_control *control, t_cmd *cmd);
-
+/*
+**		usages.c
+*/
+int					md5_sha256_usage(char *hash, char c, char *filename);
+int					usage(char *bad_arg);
 #endif

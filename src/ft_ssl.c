@@ -13,20 +13,6 @@
 
 #include "../includes/ft_ssl.h"
 
-static int				usage(char *bad_arg)
-{
-	if (bad_arg == NULL)
-		fd_printf(2, "usage: ft_ssl command [command opts] [command args])\n");
-	else
-	{
-		fd_printf(2, "ft_ssl: Error: '%s' is an invalid command.\n", bad_arg);
-		fd_printf(2, "\nStandard commands:\n");
-		fd_printf(2, "\nMessage digest commands:\nmd5\nsha256\n");
-		fd_printf(2, "\nCipher commands:\n");
-	}
-	return (-1);
-}
-
 const t_cmd g_cmd_tab[2] = {
 	{"md5", "MD5", &parsing_hash, hash_md5_buf},
 	{"sha256", "SHA256", &parsing_hash, hash_sha256_buf}

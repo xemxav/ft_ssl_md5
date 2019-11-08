@@ -13,27 +13,6 @@
 
 #include "../includes/ft_ssl.h"
 
-int					md5_sha256_usage(char *hash, char c, char *filename)
-{
-	if (filename)
-	{
-		fd_printf(2,
-				"ft_ssl: %s: %s: No such file or directory\n", hash, filename);
-		return (ERROR);
-	}
-	else if (c)
-	{
-		fd_printf(2, "ft_ssl: %s: illegal option -- %c\n", hash, c);
-		fd_printf(2, "usage: %s [-pqr] [-s string] [files ...]\n", hash);
-	}
-	else
-	{
-		fd_printf(2, "ft_ssl: %s: illegal option -- s\n", hash);
-		fd_printf(2, "usage: %s [-pqr] [-s string] [files ...]\n", hash);
-	}
-	return (FALSE);
-}
-
 static int			make_s_flag(t_control *control, char *arg, size_t i)
 {
 	control->type = STRING;
