@@ -56,6 +56,22 @@ static int			read_flags(t_control *control, char *arg)
 	return (TRUE);
 }
 
+int					check_argument(t_control *control, char **av, int i)
+{
+	if (av[i][0] == '-' && !control->file_only)
+	{
+		if ((read_flags(control, av[i])) == ERROR)
+			return (ERROR);
+	}
+	else
+	{
+		control->message = av[i];
+		if (process_argument(control) == ERROR)
+			return (ERROR);
+	}
+	return (TRUE);
+}
+
 int					parsing_hash(t_cmd *cmd, int ac, char **av)
 {
 	int				i;
@@ -65,17 +81,8 @@ int					parsing_hash(t_cmd *cmd, int ac, char **av)
 	init_control(&control, cmd);
 	while (i < ac)
 	{
-		if (av[i][0] == '-' && !control.file_only)
-		{
-			if ((read_flags(&control, av[i])) == ERROR)
-				return (ERROR);
-		}
-		else
-		{
-			control.message = av[i];
-			if (process_argument(&control) == ERROR)
-				return (ERROR);
-		}
+		if (check_argument(&control, av, i) == ERROR)
+			return (ERROR);
 		i++;
 	}
 	if (control.type == STRING)
