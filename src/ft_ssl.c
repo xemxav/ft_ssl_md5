@@ -14,8 +14,8 @@
 #include "../includes/ft_ssl.h"
 
 const t_cmd g_cmd_tab[2] = {
-	{"md5", "MD5", &parsing_hash, hash_md5_buf},
-	{"sha256", "SHA256", &parsing_hash, hash_sha256_buf}
+	{"md5", "MD5", &parsing_hash, hash_md5_buf, 4},
+	{"sha256", "SHA256", &parsing_hash, hash_sha256_buf, 8}
 };
 
 static	t_cmd			*parsing_cmd(char *av)

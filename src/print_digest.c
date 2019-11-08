@@ -15,28 +15,15 @@
 
 static void			print_digest(t_control *control)
 {
-	unsigned char	*tmp;
-	unsigned int	*tmp2;
 	int				k;
 
 	k = 0;
-	if (control->hash_func == &hash_md5_buf)
+	while (k < control->reg_nb)
 	{
-		tmp = (unsigned char*)control->md5_worker;
-		while (k < 16)
-		{
-			ft_printf("%.2x", tmp[k]);
-			k++;
-		}
-	}
-	else
-	{
-		tmp2 = (unsigned int*)control->sha_worker;
-		while (k < 8)
-		{
-			ft_printf("%.8x", tmp2[k]);
-			k++;
-		}
+		if (control->hash_func == &hash_md5_buf)
+			ft_memrev(&(control->worker->reg[k]), sizeof(char), 4);
+		ft_printf("%.8x", control->worker->reg[k]);
+		k++;
 	}
 }
 

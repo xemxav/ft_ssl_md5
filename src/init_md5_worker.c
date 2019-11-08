@@ -39,14 +39,13 @@ const unsigned int	g_s_md5[64] = { 7, 12, 17, 22, 7, 12, 17, 22, 7,
 
 int					init_md5_worker(t_control *control)
 {
-	control->md5_worker = (t_md5_worker*)malloc(sizeof(t_md5_worker));
-	if (control->md5_worker == NULL)
+	control->worker = (t_h_worker*)malloc(sizeof(t_h_worker));
+	if (control->worker == NULL)
 		return (ERROR);
-	control->md5_worker->A = 0x67452301;
-	control->md5_worker->B = 0xefcdab89;
-	control->md5_worker->C = 0x98badcfe;
-	control->md5_worker->D = 0x10325476;
-	control->md5_worker->F = 0;
-	control->md5_worker->g = 0;
+	ft_bzero(control->worker, sizeof(t_h_worker));
+	control->worker->reg[REG_A] = 0x67452301;
+	control->worker->reg[REG_B] = 0xefcdab89;
+	control->worker->reg[REG_C] = 0x98badcfe;
+	control->worker->reg[REG_D] = 0x10325476;
 	return (TRUE);
 }

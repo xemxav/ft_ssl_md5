@@ -31,14 +31,14 @@ const unsigned int	g_k_sha[64] = {
 	0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208,
 	0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2};
 
-int					init_w(t_sha_worker *worker, unsigned int *buf)
+int					init_w(t_h_worker *worker, unsigned int *buf)
 {
 	int				i;
 
 	i = 0;
 	while (i < 16)
 	{
-		ft_memcpy((void*)&(worker->w[i]), ft_memrev((void*)&(buf[i]),
+		ft_memcpy((void*)&(worker->w_sha[i]), ft_memrev((void*)&(buf[i]),
 				sizeof(char), 4), sizeof(unsigned int));
 		i++;
 	}
@@ -47,17 +47,17 @@ int					init_w(t_sha_worker *worker, unsigned int *buf)
 
 int					init_sha_worker(t_control *control)
 {
-	control->sha_worker = (t_sha_worker*)malloc(sizeof(t_sha_worker));
-	if (control->sha_worker == NULL)
+	control->worker = (t_h_worker*)malloc(sizeof(t_h_worker));
+	if (control->worker == NULL)
 		return (ERROR);
-	control->sha_worker->A = 0x6a09e667;
-	control->sha_worker->B = 0xbb67ae85;
-	control->sha_worker->C = 0x3c6ef372;
-	control->sha_worker->D = 0xa54ff53a;
-	control->sha_worker->E = 0x510e527f;
-	control->sha_worker->F = 0x9b05688c;
-	control->sha_worker->G = 0x1f83d9ab;
-	control->sha_worker->H = 0x5be0cd19;
-	ft_bzero(control->sha_worker->w, sizeof(unsigned int) * 64);
+	ft_bzero(control->worker, sizeof(t_h_worker));
+	control->worker->reg[REG_A] = 0x6a09e667;
+	control->worker->reg[REG_B] = 0xbb67ae85;
+	control->worker->reg[REG_C] = 0x3c6ef372;
+	control->worker->reg[REG_D] = 0xa54ff53a;
+	control->worker->reg[REG_E] = 0x510e527f;
+	control->worker->reg[REG_F] = 0x9b05688c;
+	control->worker->reg[REG_G] = 0x1f83d9ab;
+	control->worker->reg[REG_H] = 0x5be0cd19;
 	return (TRUE);
 }

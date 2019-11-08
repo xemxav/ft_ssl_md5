@@ -80,4 +80,5 @@ void				init_control(t_control *control, t_cmd *cmd)
 	control->hash_func = cmd->hash_func;
 	control->hash = cmd->cmd_name;
 	control->hash_maj = cmd->cmd_name_maj;
+	control->reg_nb = cmd->reg_nb;
 }
