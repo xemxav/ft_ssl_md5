@@ -26,6 +26,7 @@
 # define TRUE			1
 # define FALSE			0
 # define ERROR			-1
+
 # define REG_A			0
 # define REG_B			1
 # define REG_C			2
@@ -35,30 +36,7 @@
 # define REG_G			6
 # define REG_H			7
 
-//typedef struct			s_md5_worker
-//{
-//	unsigned int		A;
-//	unsigned int		B;
-//	unsigned int		C;
-//	unsigned int		D;
-//	unsigned int		F;
-//	unsigned int		g;
-//}						t_md5_worker;
-//
-//typedef struct			s_sha_worker
-//{
-//	unsigned int		A;
-//	unsigned int		B;
-//	unsigned int		C;
-//	unsigned int		D;
-//	unsigned int		E;
-//	unsigned int		F;
-//	unsigned int		G;
-//	unsigned int		H;
-//	unsigned int		w[64];
-//}						t_sha_worker;
-
-typedef struct 			s_h_worker
+typedef struct			s_h_worker
 {
 	unsigned int		reg[8];
 	unsigned int		f_md5;
@@ -68,10 +46,10 @@ typedef struct 			s_h_worker
 
 typedef struct			s_sha_temp
 {
-	unsigned int		S1;
+	unsigned int		s1;
 	unsigned int		ch;
 	unsigned int		temp1;
-	unsigned int		S0;
+	unsigned int		s0;
 	unsigned int		maj;
 	unsigned int		temp2;
 }						t_sha_temp;
@@ -88,7 +66,7 @@ typedef struct			s_control
 	int					file_only;
 	int					type;
 	int					has_worked;
-	int 				reg_nb;
+	int					reg_nb;
 	unsigned int		buf[16];
 	ssize_t				size;
 	int					end_message;
@@ -138,7 +116,7 @@ int						init_sha_worker(t_control *control);
 **		sha256.c
 */
 void					slave_serves_worker(t_h_worker *worker,
-		t_h_worker *slave, int max_reg_ind);
+						t_h_worker *slave, int max_reg_ind);
 int						hash_sha256_buf(t_control *control);
 /*
 **		parsing_hash.c
@@ -155,6 +133,6 @@ void					init_control(t_control *control, t_cmd *cmd);
 /*
 **		usages.c
 */
-int					md5_sha256_usage(char *hash, char c, char *filename);
-int					usage(char *bad_arg);
+int						md5_sha256_usage(char *hash, char c, char *filename);
+int						usage(char *bad_arg);
 #endif

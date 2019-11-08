@@ -31,4 +31,3 @@ void	reset_control(t_control *control)
 		control->worker = NULL;
 	}
 }
-

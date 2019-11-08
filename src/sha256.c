@@ -28,7 +28,8 @@ static void			create_msa(t_h_worker *worker)
 		s1 = rightrotate(worker->w_sha[i - 2], 17) ^
 				rightrotate(worker->w_sha[i - 2], 19)
 				^ (worker->w_sha[i - 2] >> 10);
-		worker->w_sha[i] = worker->w_sha[i - 16] + s0 + worker->w_sha[i - 7] + s1;
+		worker->w_sha[i] = worker->w_sha[i - 16] + s0 +
+				worker->w_sha[i - 7] + s1;
 		i++;
 	}
 }
@@ -48,18 +49,19 @@ void				slave_serves_worker(t_h_worker *worker, t_h_worker *slave,
 
 static void			make_sha_magic(t_sha_temp *temp, t_h_worker *slave, int i)
 {
-	temp->S1 = rightrotate(slave->reg[REG_E], 6) ^
+	temp->s1 = rightrotate(slave->reg[REG_E], 6) ^
 			rightrotate(slave->reg[REG_E], 11) ^
 			rightrotate(slave->reg[REG_E], 25);
 	temp->ch = (slave->reg[REG_E] & slave->reg[REG_F]) ^ ((~(slave->reg[REG_E]))
 			& slave->reg[REG_G]);
-	temp->temp1 = slave->reg[REG_H] + temp->S1 + temp->ch + g_k_sha[i] +
+	temp->temp1 = slave->reg[REG_H] + temp->s1 + temp->ch + g_k_sha[i] +
 			slave->w_sha[i];
-	temp->S0 = rightrotate(slave->reg[REG_A], 2) ^ rightrotate(slave->reg[REG_A], 13)
+	temp->s0 = rightrotate(slave->reg[REG_A], 2) ^
+			rightrotate(slave->reg[REG_A], 13)
 			^ rightrotate(slave->reg[REG_A], 22);
 	temp->maj = (slave->reg[REG_A] & slave->reg[REG_B]) ^ (slave->reg[REG_A]
-			&slave->reg[REG_C]) ^ (slave->reg[REG_B] & slave->reg[REG_C]);
-	temp->temp2 = temp->S0 + temp->maj;
+			& slave->reg[REG_C]) ^ (slave->reg[REG_B] & slave->reg[REG_C]);
+	temp->temp2 = temp->s0 + temp->maj;
 }
 
 static void			add_temp_to_slave(t_sha_temp *temp, t_h_worker *slave)
@@ -96,7 +98,7 @@ int					hash_sha256_buf(t_control *control)
 		add_temp_to_slave(&temp, &slave);
 		i++;
 	}
-	slave_serves_worker(control->worker, &slave, control->reg_nb - 1);
+	slave_serves_worker(control->worker, &slave, control->reg_nb);
 	ft_bzero((void*)&control->buf, sizeof(unsigned int) * 16);
 	return (TRUE);
 }

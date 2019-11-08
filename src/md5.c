@@ -48,10 +48,8 @@ int					hash_md5_buf(t_control *control)
 
 	i = 0;
 	if (!(control->worker))
-	{
 		if (!init_md5_worker(control))
 			return (ERROR);
-	}
 	ft_bzero(&slave, sizeof(t_h_worker));
 	ft_memcpy(&slave, control->worker, sizeof(t_h_worker));
 	while (i < 64)
@@ -62,10 +60,11 @@ int					hash_md5_buf(t_control *control)
 		slave.reg[REG_A] = slave.reg[REG_D];
 		slave.reg[REG_D] = slave.reg[REG_C];
 		slave.reg[REG_C] = slave.reg[REG_B];
-		slave.reg[REG_B] = slave.reg[REG_B] + lefttrotate(slave.f_md5, g_s_md5[i]);
+		slave.reg[REG_B] = slave.reg[REG_B] +
+				lefttrotate(slave.f_md5, g_s_md5[i]);
 		i++;
 	}
-	slave_serves_worker(control->worker, &slave, control->reg_nb - 1);
+	slave_serves_worker(control->worker, &slave, control->reg_nb);
 	ft_bzero((void*)&control->buf, sizeof(unsigned int) * 16);
 	return (TRUE);
 }
