@@ -28,11 +28,11 @@ static int				usage(char *bad_arg)
 }
 
 const t_cmd g_cmd_tab[2] = {
-		{"md5", "MD5", &parsing_hash, hash_md5_buf},
-		{"sha256", "SHA256", &parsing_hash, hash_sha256_buf}
-		};
+	{"md5", "MD5", &parsing_hash, hash_md5_buf},
+	{"sha256", "SHA256", &parsing_hash, hash_sha256_buf}
+};
 
-static	t_cmd 			*parsing_cmd(char *av)
+static	t_cmd			*parsing_cmd(char *av)
 {
 	int					i;
 
@@ -60,7 +60,3 @@ int						main(int ac, char **av)
 		return (ERROR);
 	return (TRUE);
 }
-
-//0123456789012345678901234567890123456789012345678901234567891234
-//
-//01234567890123456789012345678901234567890123456789012345678912345678
