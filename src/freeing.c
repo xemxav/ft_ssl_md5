@@ -24,6 +24,7 @@ void	reset_control(t_control *control)
 		control->message = NULL;
 	control->type = 0;
 	control->size = 0;
+	control->str_len = 0;
 	control->end_message = 0;
 	if (control->worker)
 	{
