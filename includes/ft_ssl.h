@@ -67,6 +67,7 @@ typedef struct			s_control
 	int					r;
 	int					file_only;
 	int					type;
+	size_t				str_len;
 	int					has_worked;
 	int					reg_nb;
 	unsigned int		buf[16];

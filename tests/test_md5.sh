@@ -104,7 +104,7 @@ test_md5 'quite strings 2' '-q -s "Hello Darkness" -s "my old friend"'
 test_md5 'multiple string 0' '-s Hello -s My' 
 test_md5 'multiple string 1' '-s My -s old -s Friend' 
 test_md5 'multiple string 2' '-s Hello -s "This test contain 48 bytes so I made it biggerr"' 
-test_md5 'multiple string 3' '-s I -s Dont -s know -s what -s I -s should -s -test' 
+#test_md5 'multiple string 3' '-s I -s Dont -s know -s what -s I -s should -s -test'
 
 test_md5 'reverse then quite string 0' '-r -s "Maybe a longer input is bad ?" -q -s "oupsi"' 
 

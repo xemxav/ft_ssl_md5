@@ -36,7 +36,7 @@ static int				hash_a_string(t_control *control)
 
 	if (control->end_message)
 	{
-		control->message -= control->size / 8;
+		control->message -= control->str_len;
 		return (TRUE);
 	}
 	len = ft_strlen(control->message);
@@ -45,6 +45,7 @@ static int				hash_a_string(t_control *control)
 	ft_memcpy(control->buf, control->message, len);
 	control->size += len * 8;
 	control->message += len;
+	control->str_len += len;
 	if (len < 64)
 		if (padding(control, len % 4, (int)(len / 4)) == ERROR)
 			return (ERROR);
