@@ -1,125 +1,132 @@
-# **************************************************************************** #
-#                                                           LE - /             #
-#                                                               /              #
-#    Makefile                                         .::    .:/ .      .::    #
-#                                                  +:+:+   +:    +:  +:+:+     #
-#    By: xem <xem@student.le-101.fr>                +:+   +:    +:    +:+      #
-#                                                  #+#   #+    #+    #+#       #
-#    Created: 2017/11/23 15:01:29 by xmoreau      #+#   ##    ##    #+#        #
-#    Updated: 2018/11/01 17:17:23 by xem         ###    #+. /#+    ###.fr      #
-#                                                          /                   #
-#                                                         /                    #
-# **************************************************************************** #
-
-.PHONY: clean fclean re all
+.PHONY: all clean fclean re
 
 CC = gcc
-
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Wextra -Werror
 
 NAME = libft.a
+PATH_OBJ = ./obj/
+PATH_SRC = ./src/
+PATH_INC = ./includes/
 
-HEADER = libft.h
+HEADER = ./includes/libft.h
 
-SRC = ft_memset.c \
-		ft_bzero.c \
-		ft_memcpy.c \
-		ft_memccpy.c \
-		ft_memmove.c \
-		ft_memchr.c \
-		ft_memcmp.c \
-		ft_strlen.c \
-		ft_strdup.c \
-		ft_strcpy.c \
-		ft_strncpy.c \
-		ft_strcat.c \
-		ft_strncat.c \
-		ft_strlcat.c \
-		ft_strchr.c \
-		ft_strrchr.c \
-		ft_strstr.c \
-		ft_strnstr.c \
-		ft_strcmp.c \
-		ft_strncmp.c \
-		ft_atoi.c \
-		ft_isalpha.c \
-		ft_isdigit.c \
-		ft_isalnum.c \
-		ft_isascii.c \
-		ft_isprint.c \
-		ft_toupper.c \
-		ft_tolower.c \
-		ft_memalloc.c \
-		ft_memdel.c \
-		ft_strnew.c \
-		ft_strdel.c \
-		ft_strclr.c \
-		ft_striter.c \
-		ft_striteri.c \
-		ft_strmap.c \
-		ft_strmapi.c \
-		ft_strequ.c \
-		ft_strnequ.c \
-		ft_strsub.c \
-		ft_strjoin.c \
-		ft_strtrim.c \
-		ft_strsplit.c \
-		ft_itoa.c \
-		ft_putchar.c \
-		ft_putstr.c \
-		ft_putendl.c \
-		ft_putnbr.c \
-		ft_putchar_fd.c \
-		ft_putstr_fd.c \
-		ft_putendl_fd.c \
-		ft_putnbr_fd.c \
-		ft_lstnew.c \
-		ft_lstdelone.c \
-		ft_lstdel.c \
-		ft_lstadd.c \
-		ft_lstiter.c \
-		ft_lstmap.c \
-		ft_islower.c \
-		ft_isupper.c \
-		ft_strrev.c \
-		ft_intcount.c \
-		ft_triabulles.c \
-		get_next_line.c \
-		multi_split.c \
-		ft_long_atoi.c \
-		ft_printf/fd_printf.c \
-		ft_printf/flag_parsing2.c \
-		ft_printf/ft_printf.c \
-		ft_printf/itoa_base_s.c \
-		ft_printf/itoa_base_u.c \
-		ft_printf/make_flags.c \
-		ft_printf/make_s_c.c \
-		ft_printf/precision.c \
-		ft_printf/run_big_c.c \
-		ft_printf/run_big_s.c \
-		ft_printf/start_processing.c \
-		ft_printf/processing.c \
-		ft_printf/struct_management.c \
-		ft_printf/trees.c \
-		ft_printf/width_for_chr.c \
-		ft_printf/width.c
+#******************************************************************************#
+#                              LIB FILES                                       #
+#******************************************************************************#
 
-OBJ = $(SRC:.c=.o)
+FILES = ft_atoi \
+		ft_bzero \
+		ft_intcount \
+		ft_isalnum \
+		ft_isalpha \
+		ft_isascii \
+		ft_isdigit \
+		ft_islower \
+		ft_isprint \
+		ft_isupper \
+		ft_itoa \
+		ft_long_atoi \
+		ft_lstadd \
+		ft_lstdel \
+		ft_lstdelone \
+		ft_lstiter \
+		ft_lstmap \
+		ft_lstnew \
+		ft_memalloc \
+		ft_memccpy \
+		ft_memchr \
+		ft_memcmp \
+		ft_memcpy \
+		ft_memdel \
+		ft_memmove \
+		ft_memrev \
+		ft_memset \
+		ft_putchar \
+		ft_putchar_fd \
+		ft_putendl \
+		ft_putendl_fd \
+		ft_putnbr \
+		ft_putnbr_fd \
+		ft_putstr \
+		ft_putstr_fd \
+		ft_strcat \
+		ft_strchr \
+		ft_strclr \
+		ft_strcmp \
+		ft_strcpy \
+		ft_strdel \
+		ft_strdup \
+		ft_strequ \
+		ft_striter \
+		ft_striteri \
+		ft_strjoin \
+		ft_strlcat \
+		ft_strlen \
+		ft_strmap \
+		ft_strmapi \
+		ft_strncat \
+		ft_strncmp \
+		ft_strncpy \
+		ft_strnequ \
+		ft_strnew \
+		ft_strnstr \
+		ft_strrchr \
+		ft_strrev \
+		ft_strsplit \
+		ft_strstr \
+		ft_strsub \
+		ft_strtrim \
+		ft_tolower \
+		ft_toupper \
+		ft_triabulles \
+		get_next_line \
+		multi_split \
+		ft_printf/fd_printf \
+		ft_printf/flag_parsing2 \
+		ft_printf/ft_printf \
+		ft_printf/itoa_base_s \
+		ft_printf/itoa_base_u \
+		ft_printf/make_flags \
+		ft_printf/make_s_c \
+		ft_printf/precision \
+		ft_printf/processing \
+		ft_printf/run_big_c \
+		ft_printf/run_big_s \
+		ft_printf/start_processing \
+		ft_printf/struct_management \
+		ft_printf/trees \
+		ft_printf/width \
+		ft_printf/width_for_chr
 
-all : $(NAME)
+OBJ = $(addprefix $(PATH_OBJ), $(addsuffix .o , $(FILES)))
+SRC = $(addprefix $(PATH_SRC), $(addsuffix .c , $(FILES)))
 
-%.o: %.c
-	@$(CC) -I $(HEADER) -o $@ -c $<
 
-$(NAME) : $(OBJ)
+#******************************************************************************#
+#                                    RULES                                     #
+#******************************************************************************#
+
+all: $(NAME)
+
+$(NAME): $(PATH_OBJ) $(OBJ)
 	@ar rcs $(NAME) $(OBJ)
 	@echo "$(NAME) has been created"
-clean :
-	@rm -f $(OBJ)
-	@echo "all the objects have been deleted"
-fclean : clean
-	@rm -f $(NAME)
-	@echo "$(NAME) has been deleted"
 
-re : fclean all
+$(PATH_OBJ)%.o: $(PATH_SRC)%.c
+	@$(CC) $(CFLAGS) -I$(HEADER) -c $< -o $@
+
+$(PATH_OBJ):
+	@mkdir -p $(PATH_OBJ)
+	@mkdir -p $(PATH_OBJ)ft_printf/
+
+clean:
+	@printf "\n\033[1m SUPPRESSION DES OBJETS\033[0m\n"
+	@rm -rf $(PATH_OBJ)
+
+fclean: clean
+	@printf "\n\033[1mSUPPRESSION DE $(NAME)\033[0m\n"
+	@rm -rf $(NAME)
+	@rm -rf $(PATH_OBJ)
+
+re: fclean all
 	@echo "$(NAME) is fresh new"

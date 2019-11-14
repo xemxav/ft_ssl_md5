@@ -68,7 +68,6 @@ test:
 	@./test.out
 
 $(NAME): $(PATH_OBJ) $(OBJ)
-	@echo "creation of lib"
 	@make -C $(PATH_LIB)
 	@$(CC) $(CFLAGS) $(OBJ) -I $(PATH_INC) $(INC_LIB) -o $(NAME)
 	@echo "$(NAME) has been compiled"
