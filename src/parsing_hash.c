@@ -56,7 +56,7 @@ static int			read_flags(t_control *control, char **av, int *i)
 		}
 		if (av[*i][y] == 's')
 			return (make_s_flag(control, av, y, i));
-		i++;
+		y++;
 	}
 	return (TRUE);
 }
