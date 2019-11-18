@@ -66,4 +66,5 @@ int				print_result(t_control *control)
 			ft_printf(" \"%s\"", control->message);
 	}
 	ft_putchar('\n');
+	return (TRUE);
 }
