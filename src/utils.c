@@ -25,27 +25,27 @@ unsigned int		lefttrotate(unsigned int n, unsigned int d)
 
 int					record_message(t_control *control, unsigned int i)
 {
-	char			*tmp;
+	void			*tmp;
 	size_t			len;
 
 	if (!control->message)
 	{
-		if (!(control->message = ft_strnew(1)))
+		if (!(control->message = (char*)malloc(1)))
 			return (ERROR);
-		ft_memcpy(control->message, control->buf + i, 1);
+		ft_memcpy((void*)control->message, (void*)control->buf, 1);
 	}
 	else
 	{
 		len = (size_t)(control->size / 8);
-		tmp = ft_strdup(control->message);
-		if (!tmp)
+		if ((tmp = (void*)malloc(len - 1)) == NULL)
 			return (ERROR);
+		ft_memcpy(tmp, (void*)control->message, len - 1);
 		free(control->message);
-		if (!(control->message = ft_strnew(len)))
+		if (!(control->message = (char*)malloc((size_t)len)))
 			return (ERROR);
-		ft_memcpy(control->message, tmp, len - 1);
+		ft_memcpy((void*)control->message, (void*)tmp, len - 1);
 		ft_memcpy(control->message + (len - 1),
-				(unsigned char*)control->buf + i, 1);
+				(void*)control->buf + i, 1);
 		free(tmp);
 	}
 	return (TRUE);

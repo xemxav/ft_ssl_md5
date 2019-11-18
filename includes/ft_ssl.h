@@ -62,6 +62,7 @@ typedef struct			s_control
 	char				*hash;
 	char				*hash_maj;
 	char				*message;
+
 	int					p;
 	int					q;
 	int					r;

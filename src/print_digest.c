@@ -27,6 +27,24 @@ static void			print_digest(t_control *control)
 	}
 }
 
+int				print_p_flag(t_control *control)
+{
+	ssize_t 		i;
+	ssize_t 		size;
+
+	i = 0;
+	if (control->hash_func == &hash_sha256_buf)
+		if (!ft_memrev(&control->size, sizeof(char), 8))
+			return (ERROR);
+	size = control->size / 8;
+	while (i < size)
+	{
+		write(1, (void*)control->message + i, 1);
+		i++;
+	}
+	return (TRUE);
+}
+
 void				print_result(t_control *control)
 {
 	if (!control->r && !control->q)
@@ -37,7 +55,8 @@ void				print_result(t_control *control)
 			ft_printf("%s (\"%s\") = ", control->hash_maj, control->message);
 	}
 	if (control->type == STDIN && control->p == 1)
-		ft_printf("%s", control->message);
+		if (print_p_flag(control) == ERROR)
+			return; //todo : a changer
 	print_digest(control);
 	if (control->r && !control->q)
 	{
