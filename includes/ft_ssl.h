@@ -98,7 +98,7 @@ int						process_argument(t_control *control);
 /*
 **		print_digest.c
 */
-void					print_result(t_control *control);
+int						print_result(t_control *control);
 /*
 **		freeing.c
 */
@@ -129,7 +129,6 @@ int						parsing_hash(t_cmd *cmd, int ac, char **av);
 /*
 **		utils.c
 */
-void					*ft_memrev(void *block, size_t elsize, size_t elnum);
 unsigned int			rightrotate(unsigned int n, unsigned int d);
 unsigned int			lefttrotate(unsigned int n, unsigned int d);
 int						record_message(t_control *control, unsigned int i);

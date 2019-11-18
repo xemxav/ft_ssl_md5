@@ -113,7 +113,7 @@ int						process_argument(t_control *control)
 	else
 		return (FALSE);
 	if (ret)
-		print_result(control);
+		ret = print_result(control);
 	reset_control(control);
 	return (ret);
 }

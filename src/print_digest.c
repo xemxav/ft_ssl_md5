@@ -13,7 +13,7 @@
 
 #include "../includes/ft_ssl.h"
 
-static void			print_digest(t_control *control)
+static void		print_digest(t_control *control)
 {
 	int				k;
 
@@ -29,8 +29,8 @@ static void			print_digest(t_control *control)
 
 int				print_p_flag(t_control *control)
 {
-	ssize_t 		i;
-	ssize_t 		size;
+	ssize_t		i;
+	ssize_t		size;
 
 	i = 0;
 	if (control->hash_func == &hash_sha256_buf)
@@ -45,7 +45,7 @@ int				print_p_flag(t_control *control)
 	return (TRUE);
 }
 
-void				print_result(t_control *control)
+int				print_result(t_control *control)
 {
 	if (!control->r && !control->q)
 	{
@@ -56,7 +56,7 @@ void				print_result(t_control *control)
 	}
 	if (control->type == STDIN && control->p == 1)
 		if (print_p_flag(control) == ERROR)
-			return; //todo : a changer
+			return (ERROR);
 	print_digest(control);
 	if (control->r && !control->q)
 	{
