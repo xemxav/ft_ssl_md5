@@ -52,7 +52,6 @@ clean:
 fclean: clean
 	@printf "\n\033[1mSUPPRESSION DE $(NAME)\033[0m\n"
 	@rm -rf $(NAME)
-	@rm -rf $(SYM_LINK)
 	@rm -rf $(PATH_OBJ)
 	@make fclean -C $(PATH_LIB)
 
@@ -62,8 +61,10 @@ re: fclean all
 #                                  Compilation                                 #
 #******************************************************************************#
 
-$(NAME): $(PATH_OBJ) $(OBJ)
+lib:
 	@make -C $(PATH_LIB)
+
+$(NAME): lib $(PATH_OBJ) $(OBJ)
 	@$(CC) $(CFLAGS) $(OBJ) -I $(PATH_INC) $(INC_LIB) -o $(NAME)
 	@echo "$(NAME) has been compiled"
 
