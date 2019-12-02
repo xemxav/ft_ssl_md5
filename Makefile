@@ -54,7 +54,7 @@ fclean: clean
 	@rm -rf $(NAME)
 	@rm -rf $(SYM_LINK)
 	@rm -rf $(PATH_OBJ)
-	@make clean -C $(PATH_LIB)
+	@make fclean -C $(PATH_LIB)
 
 re: fclean all
 
