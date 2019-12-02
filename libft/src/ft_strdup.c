@@ -20,7 +20,8 @@ char	*ft_strdup(const char *s)
 
 	len = ft_strlen(s);
 	sdup = ft_strnew(len);
-	NULL_CHECK(sdup);
+	if (!sdup)
+		return (NULL);
 	sdup = (char*)ft_memcpy(sdup, s, len);
 	return (sdup);
 }

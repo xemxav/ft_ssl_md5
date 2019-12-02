@@ -62,17 +62,12 @@ re: fclean all
 #                                  Compilation                                 #
 #******************************************************************************#
 
-test:
-	@make -C $(PATH_LIB)
-	@$(CC) $(CFLAGS) -I $(PATH_INC) $(INC_LIB) test.c -o test.out
-	@./test.out
-
 $(NAME): $(PATH_OBJ) $(OBJ)
 	@make -C $(PATH_LIB)
 	@$(CC) $(CFLAGS) $(OBJ) -I $(PATH_INC) $(INC_LIB) -o $(NAME)
 	@echo "$(NAME) has been compiled"
 
-$(PATH_OBJ)%.o: $(PATH_SRC)%.c $(HEADER)
+$(PATH_OBJ)%.o: $(PATH_SRC)%.c
 	@$(CC) $(CFLAGS) -I $(PATH_INC) -I $(PATH_INC_LIB) -c $< -o $@
 
 $(PATH_OBJ):

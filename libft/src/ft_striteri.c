@@ -18,8 +18,8 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 	unsigned int i;
 
 	i = 0;
-	VOID_NULL_CHECK(s);
-	VOID_NULL_CHECK(f);
+	if (!s || !f)
+		return ;
 	while (*s)
 		f(i++, s++);
 }

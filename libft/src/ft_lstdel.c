@@ -15,8 +15,8 @@
 
 void	ft_lstdel(t_list **alst, void (*del)(void *, size_t))
 {
-	VOID_NULL_CHECK(alst);
-	VOID_NULL_CHECK(*alst);
+	if (!alst || !*alst)
+		return ;
 	ft_lstdel(&(*alst)->next, del);
 	ft_lstdelone(alst, del);
 }

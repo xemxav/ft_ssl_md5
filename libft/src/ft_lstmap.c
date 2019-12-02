@@ -19,8 +19,8 @@ t_list	*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
 	t_list	*tmp;
 	t_list	*tmp2;
 
-	NULL_CHECK(lst);
-	NULL_CHECK(f);
+	if (!f || !lst)
+		return (NULL);
 	tmp = f(lst);
 	if ((new = ft_lstnew(tmp->content, tmp->content_size)))
 	{

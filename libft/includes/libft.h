@@ -24,10 +24,6 @@
 
 # define BUFF_SIZE	8
 
-# define NULL_CHECK(x) if (x == NULL) return (NULL)
-# define VOID_NULL_CHECK(x) if (x == NULL) return
-# define MALLOC_CHECK(x) if (x == NULL) return (NULL)
-
 typedef struct		s_list
 {
 	void			*content;

@@ -18,7 +18,8 @@ void	ft_putstr(char const *s)
 	int i;
 
 	i = 0;
-	VOID_NULL_CHECK(s);
+	if (!s)
+		return ;
 	while (s[i])
 	{
 		ft_putchar(s[i]);

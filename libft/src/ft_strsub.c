@@ -21,7 +21,8 @@ char	*ft_strsub(char const *s, unsigned int start, size_t len)
 
 	i = start;
 	y = 0;
-	NULL_CHECK(s);
+	if (!s)
+		return (NULL);
 	if ((troncon = ft_strnew(len)) == NULL)
 		return (NULL);
 	while (i < (start + len))
