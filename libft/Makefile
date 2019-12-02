@@ -8,7 +8,7 @@ PATH_OBJ = ./obj/
 PATH_SRC = ./src/
 PATH_INC = ./includes/
 
-HEADER = ./includes/libft.h
+HEADER = $(PATH_INC)libft.h
 
 #******************************************************************************#
 #                              LIB FILES                                       #
