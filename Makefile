@@ -67,7 +67,7 @@ $(NAME): $(PATH_OBJ) $(OBJ)
 	@$(CC) $(CFLAGS) $(OBJ) -I $(PATH_INC) $(INC_LIB) -o $(NAME)
 	@echo "$(NAME) has been compiled"
 
-$(PATH_OBJ)%.o: $(PATH_SRC)%.c
+$(PATH_OBJ)%.o: $(PATH_SRC)%.c $(HEADER)
 	@$(CC) $(CFLAGS) -I $(PATH_INC) -I $(PATH_INC_LIB) -c $< -o $@
 
 $(PATH_OBJ):
