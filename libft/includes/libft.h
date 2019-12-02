@@ -24,6 +24,10 @@
 
 # define BUFF_SIZE	8
 
+# define TRUE 1
+# define FALSE 0
+# define ERROR -1
+
 typedef struct		s_list
 {
 	void			*content;
