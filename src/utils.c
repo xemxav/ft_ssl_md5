@@ -51,11 +51,12 @@ int					record_message(t_control *control, unsigned int i)
 	return (TRUE);
 }
 
-void				init_control(t_control *control, t_cmd *cmd)
+void				init_control(t_control *control, t_cmd *cmd, int ac)
 {
 	ft_bzero((void*)control, sizeof(t_control));
 	control->hash_func = cmd->hash_func;
 	control->hash = cmd->cmd_name;
 	control->hash_maj = cmd->cmd_name_maj;
 	control->reg_nb = cmd->reg_nb;
+	control->arg_count = ac;
 }

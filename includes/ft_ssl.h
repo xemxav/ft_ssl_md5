@@ -59,7 +59,7 @@ typedef struct			s_control
 	char				*hash;
 	char				*hash_maj;
 	char				*message;
-
+	int					arg_count;
 	int					p;
 	int					q;
 	int					r;
@@ -129,10 +129,11 @@ int						parsing_hash(t_cmd *cmd, int ac, char **av);
 unsigned int			rightrotate(unsigned int n, unsigned int d);
 unsigned int			lefttrotate(unsigned int n, unsigned int d);
 int						record_message(t_control *control, unsigned int i);
-void					init_control(t_control *control, t_cmd *cmd);
+void					init_control(t_control *control, t_cmd *cmd, int ac);
 /*
 **		usages.c
 */
+int						need_arg_usage(char *hash, char c);
 int						md5_sha256_usage(char *hash, char c, char *filename,
 						char *dirname);
 int						usage(char *bad_arg);

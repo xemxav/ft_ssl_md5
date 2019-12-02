@@ -24,7 +24,10 @@ static int			make_s_flag(t_control *control, char **av, size_t y, int *i)
 	else
 	{
 		*i += 1;
-		control->message = av[*i];
+		if (*i < control->arg_count)
+			control->message = av[*i];
+		else
+			return (need_arg_usage(control->hash, 's'));
 	}
 	return (process_argument(control));
 }
@@ -83,7 +86,7 @@ int					parsing_hash(t_cmd *cmd, int ac, char **av)
 	t_control		control;
 
 	i = 2;
-	init_control(&control, cmd);
+	init_control(&control, cmd, ac);
 	while (i < ac)
 	{
 		if (check_argument(&control, av, &i) == ERROR)
