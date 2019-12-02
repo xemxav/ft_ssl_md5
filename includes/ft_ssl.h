@@ -25,9 +25,6 @@
 # define STDIN			1
 # define FILE			0
 # define STRING			2
-# define TRUE			1
-# define FALSE			0
-# define ERROR			-1
 
 # define REG_A			0
 # define REG_B			1
