@@ -42,7 +42,7 @@ INC_LIB = -L $(PATH_LIB) -l $(NAME_LIB)
 #                                    RULES                                     #
 #******************************************************************************#
 
-all: $(NAME)
+all: lib $(NAME)
 
 clean:
 	@printf "\n\033[1m SUPPRESSION DES OBJETS\033[0m\n"
@@ -64,7 +64,7 @@ re: fclean all
 lib:
 	@make -C $(PATH_LIB)
 
-$(NAME): lib $(PATH_OBJ) $(OBJ)
+$(NAME): $(PATH_OBJ) $(OBJ)
 	@$(CC) $(CFLAGS) $(OBJ) -I $(PATH_INC) $(INC_LIB) -o $(NAME)
 	@echo "$(NAME) has been compiled"
 
