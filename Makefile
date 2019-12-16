@@ -11,11 +11,11 @@ PATH_INC = ./includes/
 HEADER = $(PATH_INC)$(NAME).h
 
 #******************************************************************************#
-#                              MALLOC TEST                                  #
+#                              FT_SSL                                          #
 #******************************************************************************#
 
-FILES = freeing \
-		ft_ssl \
+FILES = ft_ssl \
+		freeing \
 		init_md5_worker \
 		init_sh256_worker \
 		md5 \
@@ -65,11 +65,11 @@ lib:
 	@make -C $(PATH_LIB)
 
 $(NAME): $(PATH_OBJ) $(OBJ)
-	@$(CC) $(CFLAGS) $(OBJ) -I $(PATH_INC) $(INC_LIB) -o $(NAME)
-	@echo "$(NAME) has been compiled"
+	$(CC) $(CFLAGS) $(OBJ) -I $(PATH_INC) $(INC_LIB) -o $(NAME)
+	echo "$(NAME) has been compiled"
 
 $(PATH_OBJ)%.o: $(PATH_SRC)%.c $(HEADER)
-	@$(CC) $(CFLAGS) -I $(PATH_INC) -I $(PATH_INC_LIB) -c $< -o $@
+	$(CC) $(CFLAGS) -I $(PATH_INC) -I $(PATH_INC_LIB) -c $< -o $@
 
 $(PATH_OBJ):
 	@mkdir -p $(PATH_OBJ)
