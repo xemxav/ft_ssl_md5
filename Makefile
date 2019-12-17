@@ -37,6 +37,7 @@ PATH_LIB = ./libft/
 PATH_INC_LIB = ./libft/
 NAME_LIB = ft
 INC_LIB = -L $(PATH_LIB) -l $(NAME_LIB)
+LIB = $(PATH_LIB)libft.a
 
 #******************************************************************************#
 #                                    RULES                                     #
@@ -64,7 +65,7 @@ re: fclean all
 lib:
 	@make -C $(PATH_LIB)
 
-$(NAME): $(PATH_OBJ) $(OBJ)
+$(NAME): $(PATH_OBJ) $(OBJ) $(LIB)
 	$(CC) $(CFLAGS) $(OBJ) -I $(PATH_INC) $(INC_LIB) -o $(NAME)
 	echo "$(NAME) has been compiled"
 
