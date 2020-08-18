@@ -1,14 +1,13 @@
-# Subject
-*.pdf
-
 # IDE
 .idea/
+cmake-build-debug/
 
 # Prerequisites
 *.d
 
 # Object files
 *.o
+obj/
 
 # Libraries
 *.lib

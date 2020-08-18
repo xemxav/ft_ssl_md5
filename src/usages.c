@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   usages.c                                         .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: xmoreau <xmoreau@student.le-101.fr>        +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/11/08 15:59:38 by xmoreau      #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/08 15:59:38 by xmoreau     ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   usages.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: xem <xem@student.42lyon.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/08 15:59:38 by xmoreau           #+#    #+#             */
+/*   Updated: 2020/08/18 11:46:57 by xem              ###   ########lyon.fr   */
+/*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../includes/ft_ssl.h"
 
@@ -32,7 +32,7 @@ int					md5_sha256_usage(char *hash, char c, char *filename,
 int					usage(char *bad_arg)
 {
 	if (bad_arg == NULL)
-		fd_printf(2, "usage: ft_ssl command [command opts] [command args])\n");
+		fd_printf(2, "usage: ft_ssl command [command opts] [command args]\n");
 	else
 	{
 		fd_printf(2, "ft_ssl: Error: '%s' is an invalid command.\n", bad_arg);
