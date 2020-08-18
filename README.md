@@ -30,6 +30,6 @@ SHA256 ("hashing a new string") = 72202acd73432a6bf944f6d0fcc6143fd78a674bb0f533
 ```
 
 ##### Main take away:
-* Understanding of hashing algorithms like md5 and sha256/
+* Understanding of hashing algorithms like md5 and sha256.
 * Parsing and option flag management.
 * Project structure and use of a dispatcher of function pointers. 
