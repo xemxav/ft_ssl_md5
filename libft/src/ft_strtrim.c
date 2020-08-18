@@ -46,7 +46,8 @@ char			*ft_strtrim(char const *s)
 	char	*strim;
 	size_t	i;
 
-	NULL_CHECK(s);
+	if (!s)
+		return (NULL);
 	blankstart = ft_countwsstart(s);
 	blankend = ft_countwsend(s);
 	lentocreate = ft_strlen(s) - blankstart - blankend;

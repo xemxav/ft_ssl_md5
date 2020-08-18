@@ -13,15 +13,23 @@
 
 #include "../includes/ft_ssl.h"
 
-static int			make_s_flag(t_control *control, char *arg, size_t i)
+static int			make_s_flag(t_control *control, char **av, size_t y, int *i)
 {
 	control->type = STRING;
-	if (i + 1 < ft_strlen(arg))
+	if (y + 1 < ft_strlen(av[*i]))
 	{
-		control->message = (arg + i + 1);
+		control->message = (av[*i] + y + 1);
 		return (process_argument(control));
 	}
-	return (TRUE);
+	else
+	{
+		*i += 1;
+		if (*i < control->arg_count)
+			control->message = av[*i];
+		else
+			return (need_arg_usage(control->hash, 's'));
+	}
+	return (process_argument(control));
 }
 
 static int			make_p_flag(t_control *control)
@@ -31,41 +39,41 @@ static int			make_p_flag(t_control *control)
 	return (process_argument(control));
 }
 
-static int			read_flags(t_control *control, char *arg)
+static int			read_flags(t_control *control, char **av, int *i)
 {
-	size_t			i;
+	size_t			y;
 
-	i = 1;
-	while (i < ft_strlen(arg))
+	y = 1;
+	while (y < ft_strlen(av[*i]))
 	{
-		if (!ft_strchr(AUTHFLAGS, arg[i]))
-			return (md5_sha256_usage(control->hash, arg[i], NULL, NULL));
-		if (arg[i] == 'q')
+		if (!ft_strchr(AUTHFLAGS, av[*i][y]))
+			return (md5_sha256_usage(control->hash, av[*i][y], NULL, NULL));
+		if (av[*i][y] == 'q')
 			control->q = 1;
-		if (arg[i] == 'r')
+		if (av[*i][y] == 'r')
 			control->r = 1;
-		if (arg[i] == 'p')
+		if (av[*i][y] == 'p')
 		{
 			if (make_p_flag(control) == ERROR)
 				return (ERROR);
 		}
-		if (arg[i] == 's')
-			return (make_s_flag(control, arg, i));
-		i++;
+		if (av[*i][y] == 's')
+			return (make_s_flag(control, av, y, i));
+		y++;
 	}
 	return (TRUE);
 }
 
-int					check_argument(t_control *control, char **av, int i)
+int					check_argument(t_control *control, char **av, int *i)
 {
-	if (av[i][0] == '-' && !control->file_only)
+	if (av[*i][0] == '-' && !control->file_only)
 	{
-		if ((read_flags(control, av[i])) == ERROR)
+		if ((read_flags(control, av, i)) == ERROR)
 			return (ERROR);
 	}
 	else
 	{
-		control->message = av[i];
+		control->message = av[*i];
 		if (process_argument(control) == ERROR)
 			return (ERROR);
 	}
@@ -78,10 +86,10 @@ int					parsing_hash(t_cmd *cmd, int ac, char **av)
 	t_control		control;
 
 	i = 2;
-	init_control(&control, cmd);
+	init_control(&control, cmd, ac);
 	while (i < ac)
 	{
-		if (check_argument(&control, av, i) == ERROR)
+		if (check_argument(&control, av, &i) == ERROR)
 			return (ERROR);
 		i++;
 	}

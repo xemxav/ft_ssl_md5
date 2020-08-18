@@ -13,6 +13,14 @@
 
 #include "../includes/ft_ssl.h"
 
+int					need_arg_usage(char *hash, char c)
+{
+	fd_printf(2, "ft_ssl: %s: option requires an argument -- %c\n",
+			hash, c);
+	fd_printf(2, "usage: %s [-pqr] [-s string] [files ...]\n", hash);
+	return (ERROR);
+}
+
 int					md5_sha256_usage(char *hash, char c, char *filename,
 		char *dirname)
 {

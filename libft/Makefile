@@ -8,7 +8,8 @@ PATH_OBJ = ./obj/
 PATH_SRC = ./src/
 PATH_INC = ./includes/
 
-HEADER = ./includes/libft.h
+HEADER = $(PATH_INC)libft.h
+HEADER2 = $(PATH_INC)ft_printf.h
 
 #******************************************************************************#
 #                              LIB FILES                                       #
@@ -112,8 +113,8 @@ $(NAME): $(PATH_OBJ) $(OBJ)
 	@ar rcs $(NAME) $(OBJ)
 	@echo "$(NAME) has been created"
 
-$(PATH_OBJ)%.o: $(PATH_SRC)%.c
-	@$(CC) $(CFLAGS) -I$(HEADER) -c $< -o $@
+$(PATH_OBJ)%.o: $(PATH_SRC)%.c $(HEADER) $(HEADER2)
+	@$(CC) $(CFLAGS) -I $(PATH_INC) -c $< -o $@
 
 $(PATH_OBJ):
 	@mkdir -p $(PATH_OBJ)

@@ -11,11 +11,11 @@ PATH_INC = ./includes/
 HEADER = $(PATH_INC)$(NAME).h
 
 #******************************************************************************#
-#                              MALLOC TEST                                  #
+#                              FT_SSL                                          #
 #******************************************************************************#
 
-FILES = freeing \
-		ft_ssl \
+FILES = ft_ssl \
+		freeing \
 		init_md5_worker \
 		init_sh256_worker \
 		md5 \
@@ -37,12 +37,13 @@ PATH_LIB = ./libft/
 PATH_INC_LIB = ./libft/
 NAME_LIB = ft
 INC_LIB = -L $(PATH_LIB) -l $(NAME_LIB)
+LIB = $(PATH_LIB)libft.a
 
 #******************************************************************************#
 #                                    RULES                                     #
 #******************************************************************************#
 
-all: $(NAME)
+all: lib $(NAME)
 
 clean:
 	@printf "\n\033[1m SUPPRESSION DES OBJETS\033[0m\n"
@@ -52,9 +53,8 @@ clean:
 fclean: clean
 	@printf "\n\033[1mSUPPRESSION DE $(NAME)\033[0m\n"
 	@rm -rf $(NAME)
-	@rm -rf $(SYM_LINK)
 	@rm -rf $(PATH_OBJ)
-	@make clean -C $(PATH_LIB)
+	@make fclean -C $(PATH_LIB)
 
 re: fclean all
 
@@ -62,18 +62,15 @@ re: fclean all
 #                                  Compilation                                 #
 #******************************************************************************#
 
-test:
+lib:
 	@make -C $(PATH_LIB)
-	@$(CC) $(CFLAGS) -I $(PATH_INC) $(INC_LIB) test.c -o test.out
-	@./test.out
 
-$(NAME): $(PATH_OBJ) $(OBJ)
-	@make -C $(PATH_LIB)
-	@$(CC) $(CFLAGS) $(OBJ) -I $(PATH_INC) $(INC_LIB) -o $(NAME)
-	@echo "$(NAME) has been compiled"
+$(NAME): $(PATH_OBJ) $(OBJ) $(LIB)
+	$(CC) $(CFLAGS) $(OBJ) -I $(PATH_INC) $(INC_LIB) -o $(NAME)
+	echo "$(NAME) has been compiled"
 
 $(PATH_OBJ)%.o: $(PATH_SRC)%.c $(HEADER)
-	@$(CC) $(CFLAGS) -I $(PATH_INC) -I $(PATH_INC_LIB) -c $< -o $@
+	$(CC) $(CFLAGS) -I $(PATH_INC) -I $(PATH_INC_LIB) -c $< -o $@
 
 $(PATH_OBJ):
 	@mkdir -p $(PATH_OBJ)
