@@ -13,7 +13,7 @@ usage: ft_ssl command [command opts] [command args]
 You need to choose between ```md5``` and ```sha256```, then the different option flags and a argument.
 
 * no argument : reads on STDIN
-* ```-p``` : echoSTDINtoSTDOUTand append the checksum toSTDOUT
+* ```-p``` : echo STDIN to STDOUT and append the checksum to STDOUT
 * ```-q``` : quiet mode
 * ```-r``` : reverse the format of the output.
 * ```-s``` : print the sum of the given string
